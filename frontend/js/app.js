@@ -52,7 +52,7 @@ function renderResult(data) {
       <p>${lastTest.completedDate?.slice(0, 10) ?? '—'} —
          <strong class="result-${lastTest.testResult?.toLowerCase()}">${lastTest.testResult}</strong>
       </p>
-      ${renderDefects(lastTest.rfrAndComments)}
+      ${renderDefects(lastTest.defects)}
     ` : '<p>No MOT history found.</p>'}
   `;
   resultSection.hidden = false;
