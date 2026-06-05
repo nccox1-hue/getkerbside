@@ -15,13 +15,9 @@ load_dotenv()
 
 TOKEN_URL = "https://login.microsoftonline.com/a455b827-244f-4c97-b5b4-ce5d13b4d00c/oauth2/v2.0/token"
 SCOPE     = "https://tapi.dvsa.gov.uk/.default"
-# Candidates to try — the OAuth2 scope is an Azure AD audience identifier,
-# not necessarily the API hostname. Check your DVSA welcome email to confirm.
+# Confirmed base URL: https://history.mot.api.gov.uk/v1 (proven 2026-06-05)
 CANDIDATE_BASE_URLS = [
-    os.environ.get("DVSA_BASE_URL", ""),           # .env override wins if set
-    "https://history.mot.api.gov.uk/v1",           # most likely based on DVSA docs
-    "https://beta.check-mot.service.gov.uk",       # older trade endpoint
-    "https://tapi.dvsa.gov.uk/mot-history/v1",     # original assumption
+    os.environ.get("DVSA_BASE_URL", "https://history.mot.api.gov.uk/v1"),
 ]
 
 DEFAULT_VRN = "AA19AAA"  # replace with a real plate for a meaningful result
