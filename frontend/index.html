@@ -20,6 +20,8 @@
 </header>
 
 <main>
+
+  <!-- Phase 1: VRM lookup -->
   <form id="vrn-form" autocomplete="off">
     <input
       id="vrn-input"
@@ -29,10 +31,33 @@
       aria-label="Vehicle registration"
       required
     />
-    <button type="submit">Check my quote</button>
+    <button type="submit">Check vehicle</button>
   </form>
 
   <div id="error" hidden></div>
+  <div id="vehicle-card" hidden></div>
+
+  <!-- Phase 2: Quote check (revealed after vehicle confirmed) -->
+  <form id="quote-form" hidden autocomplete="off">
+    <label for="category-select">Repair type</label>
+    <select id="category-select" required>
+      <option value="" disabled selected>Select a repair…</option>
+    </select>
+
+    <label for="price-input">Quoted price (£)</label>
+    <input
+      id="price-input"
+      type="number"
+      min="1"
+      step="0.01"
+      placeholder="e.g. 250.00"
+      aria-label="Quoted price in pounds"
+      required
+    />
+
+    <button type="submit">Check my quote</button>
+  </form>
+
   <div id="result" hidden></div>
 
   <p class="disclaimer">
@@ -40,6 +65,7 @@
     professional assessment and do not imply that any garage has acted improperly.
     Prices vary by region, vehicle condition, and supplier. Always obtain multiple quotes.
   </p>
+
 </main>
 
 <script type="module" src="/js/app.js"></script>

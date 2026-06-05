@@ -121,6 +121,126 @@ main {
   font-size: 0.9rem;
 }
 
+/* Vehicle card */
+#vehicle-card {
+  background: #fff;
+  border: 1px solid var(--border);
+  border-left: 4px solid var(--brand);
+  border-radius: 8px;
+  padding: 1rem 1.25rem;
+  margin-bottom: 1.25rem;
+}
+.vehicle-label { font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.5px; color: var(--muted); margin-bottom: 0.25rem; }
+.vehicle-name  { font-size: 1.25rem; font-weight: 700; margin-bottom: 0.2rem; }
+.vehicle-meta  { font-size: 0.875rem; color: var(--muted); margin-bottom: 0.4rem; }
+.mot-line      { font-size: 0.875rem; }
+
+/* Quote form */
+#quote-form {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  margin-bottom: 1.5rem;
+}
+#quote-form label {
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: var(--muted);
+  text-transform: uppercase;
+  letter-spacing: 0.4px;
+}
+#quote-form select,
+#quote-form input[type="number"] {
+  padding: 0.75rem 1rem;
+  font-size: 1rem;
+  border: 2px solid var(--border);
+  border-radius: 6px;
+  background: #fff;
+  width: 100%;
+}
+#quote-form select:focus,
+#quote-form input[type="number"]:focus {
+  outline: none;
+  border-color: var(--brand);
+}
+#quote-form button {
+  padding: 0.75rem 1.25rem;
+  background: var(--accent);
+  color: #fff;
+  font-size: 1rem;
+  font-weight: 600;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  margin-top: 0.25rem;
+}
+#quote-form button:disabled { opacity: 0.6; cursor: not-allowed; }
+
+/* Benchmark result */
+.benchmark-card {
+  margin-bottom: 1rem;
+}
+.benchmark-label { font-size: 0.8rem; text-transform: uppercase; letter-spacing: 0.4px; color: var(--muted); margin-bottom: 0.5rem; }
+.benchmark-range { font-size: 1rem; margin-bottom: 0.25rem; }
+.your-quote      { font-size: 1rem; margin-bottom: 0.75rem; }
+
+.verdict {
+  display: inline-block;
+  padding: 0.4rem 0.85rem;
+  border-radius: 4px;
+  font-size: 0.875rem;
+  font-weight: 700;
+  margin-bottom: 0.75rem;
+}
+.verdict-ok   { background: #e8f5e9; color: var(--pass); }
+.verdict-high { background: #fff3e0; color: var(--advisory); }
+
+.safety-badge {
+  font-size: 0.75rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.4px;
+  color: var(--advisory);
+  border: 1px solid var(--advisory);
+  display: inline-block;
+  padding: 0.2rem 0.6rem;
+  border-radius: 4px;
+}
+
+/* Upgrade prompt */
+.upgrade-prompt {
+  background: #f0f4ff;
+  border: 1px solid #c5d0f5;
+  border-radius: 8px;
+  padding: 1rem 1.25rem;
+  margin-bottom: 1rem;
+}
+.upgrade-heading { font-weight: 700; margin-bottom: 0.5rem; }
+.upgrade-prompt ul { padding-left: 1.2rem; margin-bottom: 0.75rem; font-size: 0.9rem; }
+.upgrade-prompt li { margin-bottom: 0.25rem; }
+.btn-pro {
+  width: 100%;
+  padding: 0.7rem;
+  background: var(--brand);
+  color: #fff;
+  font-size: 0.95rem;
+  font-weight: 600;
+  border: none;
+  border-radius: 6px;
+  cursor: not-allowed;
+  opacity: 0.7;
+}
+
+/* Defects section */
+.defects-section { margin-top: 1rem; }
+.section-label {
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.4px;
+  color: var(--muted);
+  margin-bottom: 0.5rem;
+}
+
 /* Disclaimer */
 .disclaimer {
   margin-top: 1.5rem;
