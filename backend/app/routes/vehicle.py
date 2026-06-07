@@ -1,5 +1,6 @@
 import re
-from fastapi import APIRouter, HTTPException
+from fastapi import APIRouter, HTTPException, Request
+from app.limiter import limiter
 from app.services import dvsa_client, dvla_client
 from app import config
 
@@ -13,7 +14,8 @@ def _clean_vrn(vrn: str) -> str:
 
 
 @router.get("/vehicle/{vrn}")
-async def lookup_vehicle(vrn: str):
+@limiter.limit("10/minute")
+async def lookup_vehicle(request: Request, vrn: str):
     vrn_clean = _clean_vrn(vrn)
     if not VRN_PATTERN.match(vrn_clean):
         raise HTTPException(status_code=422, detail="Invalid VRN format")
