@@ -108,6 +108,13 @@ function renderBenchmark(data, category, quoted) {
         ${inRange ? 'Within typical range' : 'Above typical range'}
       </div>
       ${safety_critical ? '<p class="safety-badge">Safety-critical repair</p>' : ''}
+      <p class="disclaimer">
+        These results compare your quoted prices against retail benchmark prices from
+        publicly available data. Benchmarks are indicative only and do not account for
+        labour, warranty, or supplier arrangements. A higher quote does not mean a garage
+        has acted improperly. Kerbside provides data transparency, not professional
+        mechanical or legal advice. Always discuss pricing directly with your garage.
+      </p>
     </div>
     ${renderUpgradePrompt(label, relevantAdvisories.length)}
     ${renderDefects(data.mot_history?.motTests?.[0]?.defects)}
