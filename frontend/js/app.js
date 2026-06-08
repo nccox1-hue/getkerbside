@@ -11,6 +11,7 @@ const priceInput    = document.getElementById('price-input');
 const vehicleCard   = document.getElementById('vehicle-card');
 const resultSection = document.getElementById('result');
 const errorSection  = document.getElementById('error');
+const quotePrompt   = document.getElementById('quote-prompt');
 
 // Populate category dropdown
 CATEGORIES.forEach(cat => {
@@ -33,6 +34,7 @@ vrnForm.addEventListener('submit', async (e) => {
     _vehicleData = await lookupVehicle(vrn);
     renderVehicleCard(_vehicleData);
     quoteForm.hidden = false;
+    quotePrompt.hidden = true;
   } catch (err) {
     showError(err.message);
   } finally {
@@ -63,6 +65,7 @@ function clearAll() {
   errorSection.hidden = true;
   errorSection.textContent = '';
   quoteForm.hidden = true;
+  quotePrompt.hidden = false;
   _vehicleData = null;
 }
 
@@ -73,7 +76,8 @@ function showError(msg) {
 
 function renderVehicleCard(data) {
   const mot = data.mot_history;
-  const last = mot?.motTests?.[0];
+  const tests = mot?.motTests;
+  const last = tests?.[0];
   vehicleCard.innerHTML = `
     <p class="vehicle-label">Vehicle confirmed</p>
     <p class="vehicle-name">${mot?.make ?? '—'} ${mot?.model ?? ''}</p>
@@ -86,7 +90,12 @@ function renderVehicleCard(data) {
         &nbsp;— expires ${last.expiryDate ?? '—'}
         &nbsp;— ${Number(last.odometerValue ?? 0).toLocaleString('en-GB')} mi
       </p>
-    ` : ''}
+    ` : `
+      <p class="mot-line mot-none">
+        No MOT history found for this vehicle — it may be too new to require a test
+        (MOT due ${mot?.motTestDueDate ?? 'see vehicle documents'}).
+      </p>
+    `}
   `;
   vehicleCard.hidden = false;
 }

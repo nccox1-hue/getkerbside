@@ -44,6 +44,7 @@ main {
 
 #vrn-input {
   flex: 1;
+  min-width: 0; /* allow shrinking below content size so the button isn't pushed off-screen at narrow widths */
   padding: 0.75rem 1rem;
   font-size: 1.25rem;
   font-weight: 700;
@@ -60,6 +61,7 @@ main {
 }
 
 #vrn-form button {
+  flex-shrink: 0;
   padding: 0.75rem 1.25rem;
   background: var(--accent);
   color: #fff;
@@ -134,6 +136,7 @@ main {
 .vehicle-name  { font-size: 1.25rem; font-weight: 700; margin-bottom: 0.2rem; }
 .vehicle-meta  { font-size: 0.875rem; color: var(--muted); margin-bottom: 0.4rem; }
 .mot-line      { font-size: 0.875rem; }
+.mot-none      { color: var(--muted); font-style: italic; }
 
 /* Quote form */
 #quote-form {
@@ -141,6 +144,25 @@ main {
   flex-direction: column;
   gap: 0.5rem;
   margin-bottom: 1.5rem;
+}
+/* The #quote-form ID rule above beats the UA [hidden]{display:none} rule by
+   specificity, so the form stayed visible — and interactable — before a
+   vehicle was confirmed. This restores hidden's effect and also gives the
+   user an explicit nudge to search first. */
+#quote-form[hidden] {
+  display: none;
+}
+
+/* Prompt shown in place of the (hidden) quote form until a vehicle is found */
+#quote-prompt {
+  font-size: 0.875rem;
+  color: var(--muted);
+  background: #fff;
+  border: 1px dashed var(--border);
+  border-radius: 8px;
+  padding: 0.85rem 1rem;
+  margin-bottom: 1.5rem;
+  text-align: center;
 }
 #quote-form label {
   font-size: 0.8rem;
