@@ -96,8 +96,28 @@ function renderVehicleCard(data) {
         (MOT due ${mot?.motTestDueDate ?? 'see vehicle documents'}).
       </p>
     `}
+    ${renderVehicleStatus(data.vehicle_details)}
   `;
   vehicleCard.hidden = false;
+}
+
+function renderVehicleStatus(details) {
+  if (!details?.taxStatus) return '';
+
+  const taxClass = { Taxed: 'tax-ok', SORN: 'tax-warn', Untaxed: 'tax-bad' }[details.taxStatus] ?? 'tax-warn';
+  const taxText = {
+    Taxed: `Taxed${details.taxDueDate ? ` — due ${details.taxDueDate}` : ''}`,
+    SORN: 'SORN — declared off the road',
+    Untaxed: 'Untaxed — not currently licensed for road use',
+  }[details.taxStatus] ?? details.taxStatus;
+
+  return `
+    <p class="vehicle-status">
+      <span class="tax-badge ${taxClass}">${taxText}</span>
+      ${details.markedForExport ? '<span class="tax-badge tax-bad">Marked for export</span>' : ''}
+    </p>
+    <p class="vehicle-status-source">Tax status from DVLA, checked just now.</p>
+  `;
 }
 
 function renderBenchmark(data, category, quoted) {
