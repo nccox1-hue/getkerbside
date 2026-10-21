@@ -1,5 +1,7 @@
-import { lookupVehicle } from './api.js';
+import { lookupVehicle, warmUp } from './api.js';
 import { CATEGORIES } from './benchmarks.js';
+
+warmUp();
 
 let _vehicleData = null;
 
