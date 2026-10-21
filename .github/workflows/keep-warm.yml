@@ -9,15 +9,15 @@ name: Keep Render instance warm
 #   ~90 runs/day x 1 billed minute = ~1,260 minutes over a 14-day test window
 #   (free private-repo allowance is 2,000 minutes/month).
 #
-# Hours are UTC. 6-21 UTC = 07:00-22:00 UK during BST; it shifts to 06:00-21:00
-# when GMT returns in late October. Adjust then if it still matters.
+# Hours are UTC. 7-21 UTC = 07:00-22:00 UK during GMT (set 2026-10-21, ahead of
+# clocks going back on 25 Oct). Under BST change to 6-20 to keep the same UK hours.
 #
 # DISABLE THIS once the focus group is done, or the monthly budget will be spent
 # on an app nobody is testing.
 
 on:
   schedule:
-    - cron: '*/10 6-21 * * *'
+    - cron: '*/10 7-21 * * *'
   workflow_dispatch:
 
 concurrency:
