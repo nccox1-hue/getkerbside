@@ -56,6 +56,22 @@ export const CATEGORIES = [
     keywords: ['timing', 'belt', 'cambelt'],
   },
   {
+    id: 'clutch',
+    label: 'Clutch replacement',
+    min: 400, max: 800,
+    safety_critical: false,
+    mot_testable: false,
+    keywords: ['clutch'],
+  },
+  {
+    id: 'clutch-dmf',
+    label: 'Clutch + dual-mass flywheel',
+    min: 800, max: 1500,
+    safety_critical: false,
+    mot_testable: false,
+    keywords: ['clutch', 'flywheel'],
+  },
+  {
     id: 'tyre',
     label: 'Tyre replacement (per tyre)',
     min: 75, max: 150,
