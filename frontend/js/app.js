@@ -123,7 +123,7 @@ function renderVehicleStatus(details) {
 }
 
 function renderBenchmark(data, category, quoted) {
-  const { min, max, safety_critical, keywords, label } = category;
+  const { min, max, safety_critical, keywords, label, confidence } = category;
   const inRange = quoted <= max;
 
   const relevantAdvisories = (data.mot_history?.motTests ?? [])
@@ -140,6 +140,7 @@ function renderBenchmark(data, category, quoted) {
         ${inRange ? 'Within typical range' : 'Above typical range'}
       </div>
       ${safety_critical ? '<p class="safety-badge">Safety-critical repair</p>' : ''}
+      ${confidence === 'low' ? '<p class="confidence-warning">Limited price data for this repair. Treat this range as a rough guide only.</p>' : ''}
       <p class="disclaimer">
         These results compare your quoted price against typical UK independent garage
         prices (parts, labour and VAT) from publicly available data. Benchmarks are indicative

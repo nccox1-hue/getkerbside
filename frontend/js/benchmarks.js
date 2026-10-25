@@ -1,3 +1,7 @@
+// Repair benchmarks: total price (parts + labour + VAT) at a typical UK independent garage.
+// confidence: 'high' | 'medium' | 'low'. 'low' shows a limited-data warning on the result.
+// researched: true = evidenced under docs/benchmark-research-process.md (automotive-app repo).
+// Categories without it predate the process; their 'medium' rating is provisional until researched.
 export const CATEGORIES = [
   {
     id: 'full-service',
@@ -5,6 +9,17 @@ export const CATEGORIES = [
     min: 150, max: 300,
     safety_critical: false,
     mot_testable: false,
+    confidence: 'medium',
+    keywords: [],
+  },
+  {
+    id: 'service-mot',
+    researched: true,
+    label: 'Full service + MOT',
+    min: 220, max: 300,
+    safety_critical: false,
+    mot_testable: false,
+    confidence: 'medium',
     keywords: [],
   },
   {
@@ -13,14 +28,17 @@ export const CATEGORIES = [
     min: 90, max: 180,
     safety_critical: false,
     mot_testable: false,
+    confidence: 'medium',
     keywords: [],
   },
   {
     id: 'front-pads',
+    researched: true,
     label: 'Front brake pads',
     min: 100, max: 160,
     safety_critical: true,
     mot_testable: true,
+    confidence: 'medium',
     keywords: ['brake', 'pad', 'front'],
   },
   {
@@ -29,6 +47,7 @@ export const CATEGORIES = [
     min: 180, max: 350,
     safety_critical: true,
     mot_testable: true,
+    confidence: 'medium',
     keywords: ['brake', 'disc', 'front'],
   },
   {
@@ -37,6 +56,7 @@ export const CATEGORIES = [
     min: 95, max: 150,
     safety_critical: true,
     mot_testable: true,
+    confidence: 'medium',
     keywords: ['brake', 'pad', 'rear'],
   },
   {
@@ -45,6 +65,7 @@ export const CATEGORIES = [
     min: 170, max: 320,
     safety_critical: true,
     mot_testable: true,
+    confidence: 'medium',
     keywords: ['brake', 'disc', 'rear'],
   },
   {
@@ -53,14 +74,17 @@ export const CATEGORIES = [
     min: 350, max: 800,
     safety_critical: true,
     mot_testable: false,
+    confidence: 'medium',
     keywords: ['timing', 'belt', 'cambelt'],
   },
   {
     id: 'clutch',
+    researched: true,
     label: 'Clutch replacement',
     min: 400, max: 800,
     safety_critical: false,
     mot_testable: false,
+    confidence: 'medium',
     keywords: ['clutch'],
   },
   {
@@ -69,7 +93,38 @@ export const CATEGORIES = [
     min: 800, max: 1500,
     safety_critical: false,
     mot_testable: false,
+    confidence: 'medium',
     keywords: ['clutch', 'flywheel'],
+  },
+  {
+    id: 'timing-chain',
+    researched: true,
+    label: 'Timing chain replacement',
+    min: 750, max: 1300,
+    safety_critical: true,
+    mot_testable: false,
+    confidence: 'low',
+    keywords: ['timing', 'chain'],
+  },
+  {
+    id: 'gearbox-manual',
+    researched: true,
+    label: 'Manual gearbox replacement (reconditioned unit, excl. clutch)',
+    min: 900, max: 1800,
+    safety_critical: false,
+    mot_testable: false,
+    confidence: 'medium',
+    keywords: ['gearbox', 'transmission'],
+  },
+  {
+    id: 'gearbox-auto',
+    researched: true,
+    label: 'Automatic gearbox replacement / rebuild (not DSG)',
+    min: 1900, max: 3400,
+    safety_critical: false,
+    mot_testable: false,
+    confidence: 'medium',
+    keywords: ['gearbox', 'transmission', 'automatic'],
   },
   {
     id: 'tyre',
@@ -77,6 +132,7 @@ export const CATEGORIES = [
     min: 75, max: 150,
     safety_critical: true,
     mot_testable: true,
+    confidence: 'medium',
     keywords: ['tyre', 'worn', 'tread', 'illegal'],
   },
   {
@@ -85,6 +141,7 @@ export const CATEGORIES = [
     min: 120, max: 280,
     safety_critical: false,
     mot_testable: false,
+    confidence: 'medium',
     keywords: [],
   },
   {
@@ -93,6 +150,7 @@ export const CATEGORIES = [
     min: 35, max: 55,
     safety_critical: false,
     mot_testable: true,
+    confidence: 'medium',
     keywords: [],
   },
 
@@ -102,6 +160,7 @@ export const CATEGORIES = [
     min: 45, max: 90,
     safety_critical: true,
     mot_testable: true,
+    confidence: 'medium',
     keywords: ['brake', 'fluid'],
   },
   {
@@ -110,6 +169,7 @@ export const CATEGORIES = [
     min: 100, max: 280,
     safety_critical: true,
     mot_testable: true,
+    confidence: 'medium',
     keywords: ['brake', 'pipe', 'corroded'],
   },
   {
@@ -118,6 +178,7 @@ export const CATEGORIES = [
     min: 120, max: 180,
     safety_critical: true,
     mot_testable: true,
+    confidence: 'medium',
     keywords: ['brake', 'hose'],
   },
   {
@@ -126,6 +187,7 @@ export const CATEGORIES = [
     min: 150, max: 300,
     safety_critical: true,
     mot_testable: true,
+    confidence: 'medium',
     keywords: ['brake', 'caliper'],
   },
   {
@@ -134,6 +196,7 @@ export const CATEGORIES = [
     min: 100, max: 350,
     safety_critical: true,
     mot_testable: true,
+    confidence: 'medium',
     keywords: ['brake', 'binding'],
   },
   {
@@ -142,6 +205,7 @@ export const CATEGORIES = [
     min: 80, max: 300,
     safety_critical: true,
     mot_testable: true,
+    confidence: 'medium',
     keywords: ['brake', 'imbalance'],
   },
   {
@@ -150,6 +214,7 @@ export const CATEGORIES = [
     min: 120, max: 250,
     safety_critical: true,
     mot_testable: true,
+    confidence: 'medium',
     keywords: ['brake', 'shoe', 'rear'],
   },
   {
@@ -158,6 +223,7 @@ export const CATEGORIES = [
     min: 220, max: 420,
     safety_critical: true,
     mot_testable: true,
+    confidence: 'medium',
     keywords: ['brake', 'drum', 'shoe'],
   },
   {
@@ -166,6 +232,7 @@ export const CATEGORIES = [
     min: 100, max: 300,
     safety_critical: true,
     mot_testable: true,
+    confidence: 'medium',
     keywords: ['parking', 'brake', 'cable'],
   },
   {
@@ -174,6 +241,7 @@ export const CATEGORIES = [
     min: 90, max: 220,
     safety_critical: true,
     mot_testable: true,
+    confidence: 'medium',
     keywords: ['abs', 'sensor'],
   },
   {
@@ -182,6 +250,7 @@ export const CATEGORIES = [
     min: 60, max: 120,
     safety_critical: true,
     mot_testable: true,
+    confidence: 'medium',
     keywords: ['abs', 'warning'],
   },
   {
@@ -190,6 +259,7 @@ export const CATEGORIES = [
     min: 50, max: 120,
     safety_critical: true,
     mot_testable: true,
+    confidence: 'medium',
     keywords: ['stop', 'lamp', 'not working'],
   },
 
@@ -199,6 +269,7 @@ export const CATEGORIES = [
     min: 70, max: 150,
     safety_critical: true,
     mot_testable: true,
+    confidence: 'medium',
     keywords: ['track', 'rod', 'end'],
   },
   {
@@ -207,6 +278,7 @@ export const CATEGORIES = [
     min: 100, max: 220,
     safety_critical: true,
     mot_testable: true,
+    confidence: 'medium',
     keywords: ['steering', 'linkage'],
   },
   {
@@ -215,6 +287,7 @@ export const CATEGORIES = [
     min: 80, max: 180,
     safety_critical: true,
     mot_testable: true,
+    confidence: 'medium',
     keywords: ['steering', 'rack', 'gaiter'],
   },
   {
@@ -223,6 +296,7 @@ export const CATEGORIES = [
     min: 100, max: 220,
     safety_critical: true,
     mot_testable: true,
+    confidence: 'medium',
     keywords: ['steering', 'ball', 'joint'],
   },
   {
@@ -231,6 +305,7 @@ export const CATEGORIES = [
     min: 350, max: 900,
     safety_critical: true,
     mot_testable: true,
+    confidence: 'medium',
     keywords: ['steering', 'rack'],
   },
   {
@@ -239,6 +314,7 @@ export const CATEGORIES = [
     min: 120, max: 500,
     safety_critical: true,
     mot_testable: true,
+    confidence: 'medium',
     keywords: ['power', 'steering', 'leak'],
   },
   {
@@ -247,6 +323,7 @@ export const CATEGORIES = [
     min: 250, max: 600,
     safety_critical: true,
     mot_testable: true,
+    confidence: 'medium',
     keywords: ['power', 'steering', 'pump'],
   },
   {
@@ -255,6 +332,7 @@ export const CATEGORIES = [
     min: 60, max: 120,
     safety_critical: true,
     mot_testable: true,
+    confidence: 'medium',
     keywords: ['eps', 'mil'],
   },
   {
@@ -263,6 +341,7 @@ export const CATEGORIES = [
     min: 40, max: 90,
     safety_critical: true,
     mot_testable: false,
+    confidence: 'medium',
     keywords: ['tracking', 'alignment'],
   },
 
@@ -272,6 +351,7 @@ export const CATEGORIES = [
     min: 180, max: 320,
     safety_critical: true,
     mot_testable: true,
+    confidence: 'medium',
     keywords: ['front', 'spring'],
   },
   {
@@ -280,6 +360,7 @@ export const CATEGORIES = [
     min: 125, max: 285,
     safety_critical: true,
     mot_testable: true,
+    confidence: 'medium',
     keywords: ['rear', 'spring'],
   },
   {
@@ -288,6 +369,7 @@ export const CATEGORIES = [
     min: 180, max: 420,
     safety_critical: true,
     mot_testable: true,
+    confidence: 'medium',
     keywords: ['front', 'shock', 'absorber'],
   },
   {
@@ -296,6 +378,7 @@ export const CATEGORIES = [
     min: 150, max: 350,
     safety_critical: true,
     mot_testable: true,
+    confidence: 'medium',
     keywords: ['rear', 'shock', 'absorber'],
   },
   {
@@ -304,6 +387,7 @@ export const CATEGORIES = [
     min: 120, max: 280,
     safety_critical: true,
     mot_testable: true,
+    confidence: 'medium',
     keywords: ['strut', 'mount'],
   },
   {
@@ -312,6 +396,7 @@ export const CATEGORIES = [
     min: 120, max: 300,
     safety_critical: true,
     mot_testable: true,
+    confidence: 'medium',
     keywords: ['suspension', 'arm'],
   },
   {
@@ -320,6 +405,7 @@ export const CATEGORIES = [
     min: 80, max: 180,
     safety_critical: true,
     mot_testable: true,
+    confidence: 'medium',
     keywords: ['suspension', 'ball', 'joint'],
   },
   {
@@ -328,6 +414,7 @@ export const CATEGORIES = [
     min: 70, max: 160,
     safety_critical: true,
     mot_testable: true,
+    confidence: 'medium',
     keywords: ['anti-roll', 'link'],
   },
   {
@@ -336,6 +423,7 @@ export const CATEGORIES = [
     min: 80, max: 180,
     safety_critical: true,
     mot_testable: true,
+    confidence: 'medium',
     keywords: ['anti-roll', 'bush'],
   },
   {
@@ -344,6 +432,7 @@ export const CATEGORIES = [
     min: 120, max: 300,
     safety_critical: true,
     mot_testable: true,
+    confidence: 'medium',
     keywords: ['suspension', 'bush'],
   },
   {
@@ -352,6 +441,7 @@ export const CATEGORIES = [
     min: 400, max: 1200,
     safety_critical: true,
     mot_testable: true,
+    confidence: 'medium',
     keywords: ['sub-frame', 'corroded'],
   },
   {
@@ -360,6 +450,7 @@ export const CATEGORIES = [
     min: 150, max: 350,
     safety_critical: true,
     mot_testable: true,
+    confidence: 'medium',
     keywords: ['wheel', 'bearing'],
   },
   {
@@ -368,6 +459,7 @@ export const CATEGORIES = [
     min: 50, max: 150,
     safety_critical: true,
     mot_testable: true,
+    confidence: 'medium',
     keywords: ['wheel', 'nut'],
   },
   {
@@ -376,6 +468,7 @@ export const CATEGORIES = [
     min: 50, max: 120,
     safety_critical: true,
     mot_testable: true,
+    confidence: 'medium',
     keywords: ['tpms', 'malfunction'],
   },
   {
@@ -384,6 +477,7 @@ export const CATEGORIES = [
     min: 20, max: 50,
     safety_critical: true,
     mot_testable: true,
+    confidence: 'medium',
     keywords: ['tyre', 'valve'],
   },
   {
@@ -392,6 +486,7 @@ export const CATEGORIES = [
     min: 20, max: 40,
     safety_critical: true,
     mot_testable: true,
+    confidence: 'medium',
     keywords: ['tyre', 'puncture'],
   },
   {
@@ -400,6 +495,7 @@ export const CATEGORIES = [
     min: 100, max: 300,
     safety_critical: true,
     mot_testable: true,
+    confidence: 'medium',
     keywords: ['wheel', 'distorted'],
   },
 
@@ -409,6 +505,7 @@ export const CATEGORIES = [
     min: 20, max: 80,
     safety_critical: true,
     mot_testable: true,
+    confidence: 'medium',
     keywords: ['headlamp', 'not working'],
   },
   {
@@ -417,6 +514,7 @@ export const CATEGORIES = [
     min: 20, max: 50,
     safety_critical: true,
     mot_testable: true,
+    confidence: 'medium',
     keywords: ['headlamp', 'aim'],
   },
   {
@@ -425,6 +523,7 @@ export const CATEGORIES = [
     min: 150, max: 700,
     safety_critical: true,
     mot_testable: true,
+    confidence: 'medium',
     keywords: ['headlamp', 'lens'],
   },
   {
@@ -433,6 +532,7 @@ export const CATEGORIES = [
     min: 120, max: 350,
     safety_critical: true,
     mot_testable: true,
+    confidence: 'medium',
     keywords: ['headlamp', 'levelling'],
   },
   {
@@ -441,6 +541,7 @@ export const CATEGORIES = [
     min: 15, max: 50,
     safety_critical: true,
     mot_testable: true,
+    confidence: 'medium',
     keywords: ['position', 'lamp'],
   },
   {
@@ -449,6 +550,7 @@ export const CATEGORIES = [
     min: 15, max: 50,
     safety_critical: true,
     mot_testable: true,
+    confidence: 'medium',
     keywords: ['stop', 'lamp'],
   },
   {
@@ -457,6 +559,7 @@ export const CATEGORIES = [
     min: 15, max: 50,
     safety_critical: true,
     mot_testable: true,
+    confidence: 'medium',
     keywords: ['indicator', 'lamp'],
   },
   {
@@ -465,6 +568,7 @@ export const CATEGORIES = [
     min: 20, max: 70,
     safety_critical: true,
     mot_testable: true,
+    confidence: 'medium',
     keywords: ['fog', 'lamp'],
   },
   {
@@ -473,6 +577,7 @@ export const CATEGORIES = [
     min: 15, max: 40,
     safety_critical: false,
     mot_testable: true,
+    confidence: 'medium',
     keywords: ['registration', 'plate', 'lamp'],
   },
   {
@@ -481,6 +586,7 @@ export const CATEGORIES = [
     min: 60, max: 250,
     safety_critical: true,
     mot_testable: true,
+    confidence: 'medium',
     keywords: ['daytime', 'running', 'lamp'],
   },
   {
@@ -489,6 +595,7 @@ export const CATEGORIES = [
     min: 30, max: 120,
     safety_critical: false,
     mot_testable: true,
+    confidence: 'medium',
     keywords: ['reversing', 'lamp'],
   },
   {
@@ -497,6 +604,7 @@ export const CATEGORIES = [
     min: 20, max: 80,
     safety_critical: true,
     mot_testable: true,
+    confidence: 'medium',
     keywords: ['reflector'],
   },
   {
@@ -505,6 +613,7 @@ export const CATEGORIES = [
     min: 60, max: 200,
     safety_critical: true,
     mot_testable: true,
+    confidence: 'medium',
     keywords: ['lamp', 'wiring'],
   },
   {
@@ -513,6 +622,7 @@ export const CATEGORIES = [
     min: 30, max: 100,
     safety_critical: true,
     mot_testable: true,
+    confidence: 'medium',
     keywords: ['battery', 'insecure'],
   },
 
@@ -522,6 +632,7 @@ export const CATEGORIES = [
     min: 20, max: 60,
     safety_critical: true,
     mot_testable: true,
+    confidence: 'medium',
     keywords: ['wiper'],
   },
   {
@@ -530,6 +641,7 @@ export const CATEGORIES = [
     min: 150, max: 350,
     safety_critical: true,
     mot_testable: true,
+    confidence: 'medium',
     keywords: ['wiper', 'motor'],
   },
   {
@@ -538,6 +650,7 @@ export const CATEGORIES = [
     min: 120, max: 300,
     safety_critical: true,
     mot_testable: true,
+    confidence: 'medium',
     keywords: ['wiper', 'linkage'],
   },
   {
@@ -546,6 +659,7 @@ export const CATEGORIES = [
     min: 60, max: 150,
     safety_critical: true,
     mot_testable: true,
+    confidence: 'medium',
     keywords: ['washer', 'pump'],
   },
   {
@@ -554,6 +668,7 @@ export const CATEGORIES = [
     min: 30, max: 100,
     safety_critical: true,
     mot_testable: true,
+    confidence: 'medium',
     keywords: ['washer', 'jet'],
   },
   {
@@ -562,6 +677,7 @@ export const CATEGORIES = [
     min: 35, max: 90,
     safety_critical: true,
     mot_testable: true,
+    confidence: 'medium',
     keywords: ['windscreen', 'chip'],
   },
   {
@@ -570,6 +686,7 @@ export const CATEGORIES = [
     min: 180, max: 650,
     safety_critical: true,
     mot_testable: true,
+    confidence: 'medium',
     keywords: ['windscreen', 'crack'],
   },
   {
@@ -578,6 +695,7 @@ export const CATEGORIES = [
     min: 30, max: 120,
     safety_critical: true,
     mot_testable: true,
+    confidence: 'medium',
     keywords: ['mirror', 'glass'],
   },
   {
@@ -586,6 +704,7 @@ export const CATEGORIES = [
     min: 120, max: 400,
     safety_critical: true,
     mot_testable: true,
+    confidence: 'medium',
     keywords: ['mirror', 'insecure'],
   },
   {
@@ -594,6 +713,7 @@ export const CATEGORIES = [
     min: 80, max: 220,
     safety_critical: true,
     mot_testable: true,
+    confidence: 'medium',
     keywords: ['bonnet', 'catch'],
   },
 
@@ -603,6 +723,7 @@ export const CATEGORIES = [
     min: 80, max: 250,
     safety_critical: true,
     mot_testable: true,
+    confidence: 'medium',
     keywords: ['exhaust', 'leak'],
   },
   {
@@ -611,6 +732,7 @@ export const CATEGORIES = [
     min: 40, max: 120,
     safety_critical: true,
     mot_testable: true,
+    confidence: 'medium',
     keywords: ['exhaust', 'insecure'],
   },
   {
@@ -619,6 +741,7 @@ export const CATEGORIES = [
     min: 120, max: 450,
     safety_critical: true,
     mot_testable: true,
+    confidence: 'medium',
     keywords: ['exhaust', 'system'],
   },
   {
@@ -627,6 +750,7 @@ export const CATEGORIES = [
     min: 20, max: 70,
     safety_critical: true,
     mot_testable: true,
+    confidence: 'medium',
     keywords: ['fuel', 'cap'],
   },
   {
@@ -635,6 +759,7 @@ export const CATEGORIES = [
     min: 120, max: 600,
     safety_critical: true,
     mot_testable: true,
+    confidence: 'medium',
     keywords: ['fuel', 'leak'],
   },
   {
@@ -643,6 +768,7 @@ export const CATEGORIES = [
     min: 100, max: 350,
     safety_critical: true,
     mot_testable: true,
+    confidence: 'medium',
     keywords: ['fuel', 'pipe'],
   },
   {
@@ -651,6 +777,7 @@ export const CATEGORIES = [
     min: 80, max: 220,
     safety_critical: true,
     mot_testable: true,
+    confidence: 'medium',
     keywords: ['door', 'close'],
   },
   {
@@ -659,6 +786,7 @@ export const CATEGORIES = [
     min: 80, max: 250,
     safety_critical: true,
     mot_testable: true,
+    confidence: 'medium',
     keywords: ['door', 'open'],
   },
   {
@@ -667,6 +795,7 @@ export const CATEGORIES = [
     min: 60, max: 200,
     safety_critical: true,
     mot_testable: true,
+    confidence: 'medium',
     keywords: ['bumper', 'insecure'],
   },
   {
@@ -675,6 +804,7 @@ export const CATEGORIES = [
     min: 80, max: 300,
     safety_critical: true,
     mot_testable: true,
+    confidence: 'medium',
     keywords: ['body', 'sharp'],
   },
   {
@@ -683,6 +813,7 @@ export const CATEGORIES = [
     min: 250, max: 1000,
     safety_critical: true,
     mot_testable: true,
+    confidence: 'medium',
     keywords: ['sill', 'corroded'],
   },
   {
@@ -691,6 +822,7 @@ export const CATEGORIES = [
     min: 300, max: 1500,
     safety_critical: true,
     mot_testable: true,
+    confidence: 'medium',
     keywords: ['structure', 'corroded'],
   },
   {
@@ -699,6 +831,7 @@ export const CATEGORIES = [
     min: 150, max: 400,
     safety_critical: true,
     mot_testable: true,
+    confidence: 'medium',
     keywords: ['engine', 'mounting'],
   },
   {
@@ -707,6 +840,7 @@ export const CATEGORIES = [
     min: 80, max: 180,
     safety_critical: true,
     mot_testable: true,
+    confidence: 'medium',
     keywords: ['cv', 'boot'],
   },
   {
@@ -715,6 +849,7 @@ export const CATEGORIES = [
     min: 180, max: 500,
     safety_critical: true,
     mot_testable: true,
+    confidence: 'medium',
     keywords: ['drive', 'shaft'],
   },
   {
@@ -723,6 +858,7 @@ export const CATEGORIES = [
     min: 80, max: 300,
     safety_critical: true,
     mot_testable: true,
+    confidence: 'medium',
     keywords: ['towbar'],
   },
 
@@ -732,6 +868,7 @@ export const CATEGORIES = [
     min: 150, max: 350,
     safety_critical: true,
     mot_testable: true,
+    confidence: 'medium',
     keywords: ['seat', 'belt'],
   },
   {
@@ -740,6 +877,7 @@ export const CATEGORIES = [
     min: 100, max: 250,
     safety_critical: true,
     mot_testable: true,
+    confidence: 'medium',
     keywords: ['seat', 'belt', 'buckle'],
   },
   {
@@ -748,6 +886,7 @@ export const CATEGORIES = [
     min: 150, max: 500,
     safety_critical: true,
     mot_testable: true,
+    confidence: 'medium',
     keywords: ['seat', 'belt', 'anchorage'],
   },
   {
@@ -756,6 +895,7 @@ export const CATEGORIES = [
     min: 60, max: 140,
     safety_critical: true,
     mot_testable: true,
+    confidence: 'medium',
     keywords: ['airbag', 'warning'],
   },
   {
@@ -764,6 +904,7 @@ export const CATEGORIES = [
     min: 60, max: 140,
     safety_critical: true,
     mot_testable: true,
+    confidence: 'medium',
     keywords: ['srs', 'warning'],
   },
   {
@@ -772,6 +913,7 @@ export const CATEGORIES = [
     min: 50, max: 180,
     safety_critical: true,
     mot_testable: true,
+    confidence: 'medium',
     keywords: ['horn'],
   },
   {
@@ -780,6 +922,7 @@ export const CATEGORIES = [
     min: 100, max: 400,
     safety_critical: true,
     mot_testable: true,
+    confidence: 'medium',
     keywords: ['speedometer'],
   },
   {
@@ -788,6 +931,7 @@ export const CATEGORIES = [
     min: 60, max: 140,
     safety_critical: true,
     mot_testable: true,
+    confidence: 'medium',
     keywords: ['esc', 'warning'],
   },
 
@@ -797,6 +941,7 @@ export const CATEGORIES = [
     min: 60, max: 160,
     safety_critical: false,
     mot_testable: true,
+    confidence: 'medium',
     keywords: ['emissions'],
   },
   {
@@ -805,6 +950,7 @@ export const CATEGORIES = [
     min: 60, max: 140,
     safety_critical: false,
     mot_testable: true,
+    confidence: 'medium',
     keywords: ['mil', 'eml'],
   },
   {
@@ -813,6 +959,7 @@ export const CATEGORIES = [
     min: 120, max: 300,
     safety_critical: false,
     mot_testable: true,
+    confidence: 'medium',
     keywords: ['oxygen', 'sensor'],
   },
   {
@@ -821,6 +968,7 @@ export const CATEGORIES = [
     min: 175, max: 900,
     safety_critical: false,
     mot_testable: true,
+    confidence: 'medium',
     keywords: ['catalytic', 'converter'],
   },
   {
@@ -829,6 +977,7 @@ export const CATEGORIES = [
     min: 150, max: 500,
     safety_critical: false,
     mot_testable: true,
+    confidence: 'medium',
     keywords: ['egr'],
   },
   {
@@ -837,6 +986,7 @@ export const CATEGORIES = [
     min: 160, max: 500,
     safety_critical: false,
     mot_testable: true,
+    confidence: 'medium',
     keywords: ['dpf'],
   },
   {
@@ -845,6 +995,7 @@ export const CATEGORIES = [
     min: 1000, max: 3500,
     safety_critical: false,
     mot_testable: true,
+    confidence: 'medium',
     keywords: ['diesel', 'particulate', 'filter'],
   },
   {
@@ -853,6 +1004,7 @@ export const CATEGORIES = [
     min: 60, max: 180,
     safety_critical: false,
     mot_testable: true,
+    confidence: 'medium',
     keywords: ['smoke'],
   },
   {
@@ -861,6 +1013,7 @@ export const CATEGORIES = [
     min: 100, max: 600,
     safety_critical: true,
     mot_testable: true,
+    confidence: 'medium',
     keywords: ['oil', 'leak'],
   },
   {
@@ -869,6 +1022,7 @@ export const CATEGORIES = [
     min: 100, max: 500,
     safety_critical: true,
     mot_testable: true,
+    confidence: 'medium',
     keywords: ['coolant', 'leak'],
   },
 
@@ -878,6 +1032,7 @@ export const CATEGORIES = [
     min: 25, max: 60,
     safety_critical: false,
     mot_testable: true,
+    confidence: 'medium',
     keywords: ['registration', 'plate'],
   },
   {
@@ -886,6 +1041,7 @@ export const CATEGORIES = [
     min: 10, max: 40,
     safety_critical: false,
     mot_testable: true,
+    confidence: 'medium',
     keywords: ['registration', 'plate', 'insecure'],
   },
   {
@@ -894,6 +1050,7 @@ export const CATEGORIES = [
     min: 50, max: 200,
     safety_critical: false,
     mot_testable: true,
+    confidence: 'medium',
     keywords: ['vin'],
   },
 ];
