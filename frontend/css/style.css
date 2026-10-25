@@ -217,6 +217,7 @@ main {
 }
 .benchmark-label { font-size: 0.8rem; text-transform: uppercase; letter-spacing: 0.4px; color: var(--muted); margin-bottom: 0.5rem; }
 .benchmark-range { font-size: 1rem; margin-bottom: 0.25rem; }
+.vat-note        { font-size: 0.8rem; color: var(--muted); margin-bottom: 0.5rem; }
 .your-quote      { font-size: 1rem; margin-bottom: 0.75rem; }
 
 .verdict {
