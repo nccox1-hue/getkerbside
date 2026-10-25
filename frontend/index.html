@@ -45,6 +45,16 @@
     <select id="category-select" required>
       <option value="" disabled selected>Select a repair…</option>
     </select>
+    <p class="field-hint">Covers over 100 common servicing, MOT and repair jobs. Can't see yours? Pick the closest match.</p>
+
+    <div id="transmission-group" class="field-group" hidden>
+      <label for="transmission-select">Gearbox type</label>
+      <select id="transmission-select">
+        <option value="">Not sure</option>
+        <option value="manual">Manual</option>
+        <option value="automatic">Automatic</option>
+      </select>
+    </div>
 
     <label for="price-input">Quoted price (£)</label>
     <input
@@ -61,6 +71,13 @@
   </form>
 
   <div id="result" hidden></div>
+
+  <details class="how-we-price">
+    <summary>How we work out typical prices</summary>
+    <p>Each range is the total you'd typically pay at a UK independent garage: parts, labour and VAT.</p>
+    <p>We build the ranges from published garage price guides, booking-platform averages and fixed-price menus, using several sources for each repair where we can.</p>
+    <p>For now, each repair has one national range for all cars. Prices for your make and model, and main dealer prices, can be higher. Where we have limited data, we tell you on the result.</p>
+  </details>
 
   <p class="disclaimer">
     Kerbside provides benchmark data for transparency purposes only. Results are not a

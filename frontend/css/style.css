@@ -211,6 +211,9 @@ main {
 }
 #quote-form button:disabled { opacity: 0.6; cursor: not-allowed; }
 
+.field-hint { font-size: 0.8rem; color: var(--muted); margin-top: -0.25rem; }
+.field-group { display: flex; flex-direction: column; gap: 0.5rem; }
+
 /* Benchmark result */
 .benchmark-card {
   margin-bottom: 1rem;
@@ -218,6 +221,7 @@ main {
 .benchmark-label { font-size: 0.8rem; text-transform: uppercase; letter-spacing: 0.4px; color: var(--muted); margin-bottom: 0.5rem; }
 .benchmark-range { font-size: 1rem; margin-bottom: 0.25rem; }
 .confidence-warning { font-size: 0.8rem; color: var(--advisory); background: #fff3e0; padding: 0.4rem 0.6rem; border-radius: 4px; margin-bottom: 0.75rem; }
+.benchmark-basis { font-size: 0.875rem; font-weight: 600; color: var(--brand); margin-bottom: 0.25rem; }
 .vat-note        { font-size: 0.8rem; color: var(--muted); margin-bottom: 0.5rem; }
 .your-quote      { font-size: 1rem; margin-bottom: 0.75rem; }
 
@@ -285,3 +289,8 @@ main {
   color: var(--muted);
   line-height: 1.5;
 }
+
+/* How we price explainer */
+.how-we-price { font-size: 0.85rem; color: var(--muted); margin: 1rem 0; }
+.how-we-price summary { cursor: pointer; font-weight: 600; color: var(--brand); }
+.how-we-price p { margin-top: 0.5rem; }

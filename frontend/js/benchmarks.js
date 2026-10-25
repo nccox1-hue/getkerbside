@@ -80,6 +80,7 @@ export const CATEGORIES = [
   {
     id: 'clutch',
     researched: true,
+    asks_transmission: true,
     label: 'Clutch replacement',
     min: 400, max: 800,
     safety_critical: false,
@@ -89,6 +90,7 @@ export const CATEGORIES = [
   },
   {
     id: 'clutch-dmf',
+    asks_transmission: true,
     label: 'Clutch + dual-mass flywheel',
     min: 800, max: 1500,
     safety_critical: false,
@@ -109,6 +111,7 @@ export const CATEGORIES = [
   {
     id: 'gearbox-manual',
     researched: true,
+    asks_transmission: true,
     label: 'Manual gearbox replacement (reconditioned unit, excl. clutch)',
     min: 900, max: 1800,
     safety_critical: false,
@@ -119,6 +122,7 @@ export const CATEGORIES = [
   {
     id: 'gearbox-auto',
     researched: true,
+    asks_transmission: true,
     label: 'Automatic gearbox replacement / rebuild (not DSG)',
     min: 1900, max: 3400,
     safety_critical: false,

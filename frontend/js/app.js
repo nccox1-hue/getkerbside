@@ -10,6 +10,8 @@ const quoteForm     = document.getElementById('quote-form');
 const vrnInput      = document.getElementById('vrn-input');
 const categorySelect = document.getElementById('category-select');
 const priceInput    = document.getElementById('price-input');
+const transmissionGroup  = document.getElementById('transmission-group');
+const transmissionSelect = document.getElementById('transmission-select');
 const vehicleCard   = document.getElementById('vehicle-card');
 const resultSection = document.getElementById('result');
 const errorSection  = document.getElementById('error');
@@ -21,6 +23,13 @@ const quotePrompt   = document.getElementById('quote-prompt');
   opt.value = cat.id;
   opt.textContent = cat.label;
   categorySelect.appendChild(opt);
+});
+
+// Ask manual or automatic only for gearbox and clutch jobs
+categorySelect.addEventListener('change', () => {
+  const category = CATEGORIES.find(c => c.id === categorySelect.value);
+  transmissionGroup.hidden = !category?.asks_transmission;
+  if (transmissionGroup.hidden) transmissionSelect.value = '';
 });
 
 // Phase 1 — VRM lookup
@@ -133,13 +142,15 @@ function renderBenchmark(data, category, quoted) {
   resultSection.innerHTML = `
     <div class="benchmark-card">
       <p class="benchmark-label">${label}</p>
-      <p class="benchmark-range">Typical price (parts, labour and VAT): <strong>£${min}–£${max}</strong></p>
+      <p class="benchmark-range">Typical price: <strong>£${min}–£${max}</strong></p>
+      <p class="benchmark-basis">Includes parts, labour and VAT</p>
       <p class="vat-note">Compare this with your total price. If your quote is shown before VAT, add 20%.</p>
       <p class="your-quote">Your quote: <strong>£${quoted.toFixed(2)}</strong></p>
       <div class="verdict ${inRange ? 'verdict-ok' : 'verdict-high'}">
         ${inRange ? 'Within typical range' : 'Above typical range'}
       </div>
       ${safety_critical ? '<p class="safety-badge">Safety-critical repair</p>' : ''}
+      ${renderTransmissionNote(category.id, transmissionSelect.value)}
       ${confidence === 'low' ? '<p class="confidence-warning">Limited price data for this repair. Treat this range as a rough guide only.</p>' : ''}
       <p class="disclaimer">
         These results compare your quoted price against typical UK independent garage
@@ -154,6 +165,17 @@ function renderBenchmark(data, category, quoted) {
     ${renderDefects(data.mot_history?.motTests?.[0]?.defects)}
   `;
   resultSection.hidden = false;
+}
+
+function renderTransmissionNote(categoryId, transmission) {
+  const notes = {
+    'clutch:automatic': "Most automatic cars don't have a clutch replaced this way. If yours is a dual-clutch (DSG or DCT) gearbox, clutch work usually costs more than this range, so treat it as a rough guide.",
+    'clutch-dmf:automatic': "Most automatic cars don't have a clutch replaced this way. If yours is a dual-clutch (DSG or DCT) gearbox, clutch work usually costs more than this range, so treat it as a rough guide.",
+    'gearbox-manual:automatic': "This is the range for a manual gearbox. For an automatic, choose \"Automatic gearbox replacement / rebuild\" instead.",
+    'gearbox-auto:manual': "This is the range for an automatic gearbox. For a manual, choose \"Manual gearbox replacement\" instead.",
+  };
+  const note = notes[`${categoryId}:${transmission}`];
+  return note ? `<p class="confidence-warning">${note}</p>` : '';
 }
 
 function renderUpgradePrompt(categoryLabel, advisoryCount) {
