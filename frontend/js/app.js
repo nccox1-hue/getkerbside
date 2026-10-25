@@ -15,8 +15,8 @@ const resultSection = document.getElementById('result');
 const errorSection  = document.getElementById('error');
 const quotePrompt   = document.getElementById('quote-prompt');
 
-// Populate category dropdown
-CATEGORIES.forEach(cat => {
+// Populate category dropdown, A–Z by label
+[...CATEGORIES].sort((a, b) => a.label.localeCompare(b.label, 'en-GB')).forEach(cat => {
   const opt = document.createElement('option');
   opt.value = cat.id;
   opt.textContent = cat.label;
