@@ -1,5 +1,5 @@
 import { lookupVehicle, warmUp } from './api.js';
-import { CATEGORIES } from './benchmarks.js';
+import { CATEGORIES, SHOW_UNRESEARCHED } from './benchmarks.js';
 
 warmUp();
 
@@ -17,8 +17,16 @@ const resultSection = document.getElementById('result');
 const errorSection  = document.getElementById('error');
 const quotePrompt   = document.getElementById('quote-prompt');
 
+// Unresearched categories are hidden once the launch switch is off
+const LISTED = SHOW_UNRESEARCHED ? CATEGORIES : CATEGORIES.filter(c => c.researched);
+
+if (!SHOW_UNRESEARCHED) {
+  document.getElementById('coverage-hint').textContent =
+    `Covers ${LISTED.length} common servicing and repair jobs, each researched. Can't see yours? We're adding more regularly.`;
+}
+
 // Populate category dropdown, A–Z by label
-[...CATEGORIES].sort((a, b) => a.label.localeCompare(b.label, 'en-GB')).forEach(cat => {
+[...LISTED].sort((a, b) => a.label.localeCompare(b.label, 'en-GB')).forEach(cat => {
   const opt = document.createElement('option');
   opt.value = cat.id;
   opt.textContent = cat.label;

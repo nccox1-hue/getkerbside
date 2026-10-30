@@ -2,6 +2,11 @@
 // confidence: 'high' | 'medium' | 'low'. 'low' shows a limited-data warning on the result.
 // researched: true = evidenced under docs/benchmark-research-process.md (automotive-app repo).
 // Categories without it predate the process; their 'medium' rating is provisional until researched.
+
+// Launch switch (CEO 2026-10-30): set to false before go-live so only researched categories are listed.
+// Kept true until the launch shortlist is researched, otherwise the live list drops to a handful of jobs.
+export const SHOW_UNRESEARCHED = true;
+
 export const CATEGORIES = [
   {
     id: 'full-service',
