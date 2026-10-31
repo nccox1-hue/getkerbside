@@ -105,7 +105,6 @@ export const CATEGORIES = [
   },
   {
     id: 'timing-chain',
-    researched: true,
     label: 'Timing chain replacement',
     min: 750, max: 1300,
     safety_critical: true,
@@ -115,7 +114,6 @@ export const CATEGORIES = [
   },
   {
     id: 'gearbox-manual',
-    researched: true,
     asks_transmission: true,
     label: 'Manual gearbox replacement (reconditioned unit, excl. clutch)',
     min: 900, max: 1800,
@@ -126,7 +124,6 @@ export const CATEGORIES = [
   },
   {
     id: 'gearbox-auto',
-    researched: true,
     asks_transmission: true,
     label: 'Automatic gearbox replacement / rebuild (not DSG)',
     min: 1900, max: 3400,
