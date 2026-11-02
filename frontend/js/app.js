@@ -141,7 +141,9 @@ function renderVehicleStatus(details) {
 
 function renderBenchmark(data, category, quoted) {
   const { min, max, safety_critical, keywords, label, confidence } = category;
-  const inRange = quoted <= max;
+  // Three-way verdict: a quote below the range is flagged too, not passed as typical
+  const verdict = quoted < min ? 'low' : quoted > max ? 'high' : 'ok';
+  const verdictText = { low: 'Below typical range', ok: 'Within typical range', high: 'Above typical range' }[verdict];
 
   const relevantAdvisories = (data.mot_history?.motTests ?? [])
     .flatMap(t => t.defects ?? [])
@@ -154,9 +156,8 @@ function renderBenchmark(data, category, quoted) {
       <p class="benchmark-basis">Includes parts, labour and VAT</p>
       <p class="vat-note">Compare this with your total price. If your quote is shown before VAT, add 20%.</p>
       <p class="your-quote">Your quote: <strong>£${quoted.toFixed(2)}</strong></p>
-      <div class="verdict ${inRange ? 'verdict-ok' : 'verdict-high'}">
-        ${inRange ? 'Within typical range' : 'Above typical range'}
-      </div>
+      <div class="verdict verdict-${verdict}">${verdictText}</div>
+      ${verdict === 'low' ? '<p class="confidence-warning">A price this low can mean cheaper parts, part of the job left out, or a price that goes up once work starts. Check exactly what the quote includes.</p>' : ''}
       ${safety_critical ? '<p class="safety-badge">Safety-critical repair</p>' : ''}
       ${renderTransmissionNote(category.id, transmissionSelect.value)}
       ${confidence === 'low' ? '<p class="confidence-warning">Limited price data for this repair. Treat this range as a rough guide only.</p>' : ''}

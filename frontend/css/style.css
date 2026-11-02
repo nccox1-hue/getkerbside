@@ -235,6 +235,7 @@ main {
 }
 .verdict-ok   { background: #e8f5e9; color: var(--pass); }
 .verdict-high { background: #fff3e0; color: var(--advisory); }
+.verdict-low  { background: #e3f2fd; color: #1565c0; }
 
 .safety-badge {
   font-size: 0.75rem;
