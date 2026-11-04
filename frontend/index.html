@@ -56,6 +56,13 @@
       </select>
     </div>
 
+    <label for="region-select">Where is the garage?</label>
+    <select id="region-select">
+      <option value="other">Rest of UK</option>
+      <option value="london">London</option>
+      <option value="south-east">South East</option>
+    </select>
+
     <label for="price-input">Quoted price (£)</label>
     <input
       id="price-input"
@@ -77,6 +84,7 @@
     <p>Each range is the total you'd typically pay at a UK independent garage: parts, labour and VAT.</p>
     <p>We build the ranges from published garage price guides, booking-platform averages and fixed-price menus, using several sources for each repair where we can.</p>
     <p>For now, each repair has one national range for all cars. Prices for your make and model, and main dealer prices, can be higher. Where we have limited data, we tell you on the result.</p>
+    <p>Garage labour costs more in London and the South East, so for labour-heavy jobs we raise the range there (about 20% in London, 10% in the South East). Parts-led jobs such as tyres, batteries and bulbs use the national range everywhere.</p>
   </details>
 
   <p class="disclaimer">

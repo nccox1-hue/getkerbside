@@ -1,5 +1,5 @@
 import { lookupVehicle, warmUp } from './api.js';
-import { CATEGORIES, SHOW_UNRESEARCHED } from './benchmarks.js';
+import { CATEGORIES, SHOW_UNRESEARCHED, REGIONS, NOT_REGIONAL } from './benchmarks.js';
 
 warmUp();
 
@@ -16,6 +16,13 @@ const vehicleCard   = document.getElementById('vehicle-card');
 const resultSection = document.getElementById('result');
 const errorSection  = document.getElementById('error');
 const quotePrompt   = document.getElementById('quote-prompt');
+const regionSelect  = document.getElementById('region-select');
+
+// Remember the region between visits; storage can be unavailable, so failures are ignored
+try { regionSelect.value = localStorage.getItem('kerbside-region') || 'other'; } catch {}
+regionSelect.addEventListener('change', () => {
+  try { localStorage.setItem('kerbside-region', regionSelect.value); } catch {}
+});
 
 // Unresearched categories are hidden once the launch switch is off
 const LISTED = SHOW_UNRESEARCHED ? CATEGORIES : CATEGORIES.filter(c => c.researched);
@@ -140,7 +147,13 @@ function renderVehicleStatus(details) {
 }
 
 function renderBenchmark(data, category, quoted) {
-  const { min, max, safety_critical, keywords, label, confidence } = category;
+  const { safety_critical, keywords, label, confidence } = category;
+  const region = REGIONS[regionSelect.value] ?? REGIONS.other;
+  const regional = region.factor !== 1 && !NOT_REGIONAL.has(category.id);
+  // Round adjusted ranges to the nearest £5 so they don't imply false precision
+  const adjust = v => regional ? Math.round(v * region.factor / 5) * 5 : v;
+  const min = adjust(category.min);
+  const max = adjust(category.max);
   // Three-way verdict: a quote below the range is flagged too, not passed as typical
   const verdict = quoted < min ? 'low' : quoted > max ? 'high' : 'ok';
   const verdictText = { low: 'Below typical range', ok: 'Within typical range', high: 'Above typical range' }[verdict];
@@ -153,7 +166,7 @@ function renderBenchmark(data, category, quoted) {
     <div class="benchmark-card">
       <p class="benchmark-label">${label}</p>
       <p class="benchmark-range">Typical price: <strong>£${min}–£${max}</strong></p>
-      <p class="benchmark-basis">Includes parts, labour and VAT</p>
+      <p class="benchmark-basis">Includes parts, labour and VAT${regional ? `. Adjusted for ${region.label} garage labour rates` : ''}</p>
       <p class="vat-note">Compare this with your total price. If your quote is shown before VAT, add 20%.</p>
       <p class="your-quote">Your quote: <strong>£${quoted.toFixed(2)}</strong></p>
       <div class="verdict verdict-${verdict}">${verdictText}</div>

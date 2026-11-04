@@ -7,6 +7,24 @@
 // Kept true until the launch shortlist is researched, otherwise the live list drops to a handful of jobs.
 export const SHOW_UNRESEARCHED = true;
 
+// Regional bands (CEO 2026-11-04, docs/research/regional-bands-2026-11.md in automotive-app repo).
+// London and South East labour runs about 45% and 20% above the UK average; factor = premium x ~50% labour share.
+// No band below national: booking data shows no consistent discount outside the South East.
+export const REGIONS = {
+  'london':     { label: 'London', factor: 1.20 },
+  'south-east': { label: 'South East', factor: 1.10 },
+  'other':      { label: 'Rest of UK', factor: 1 },
+};
+
+// Parts-led or fixed-fee jobs keep the national range in every region
+export const NOT_REGIONAL = new Set([
+  'tyre', 'battery', 'mot-test', 'wiper-blades', 'tyre-valve', 'puncture-repair',
+  'headlamp-bulb', 'tail-lamp-bulb', 'brake-lamp-bulb', 'indicator-bulb', 'fog-lamp-bulb',
+  'number-plate-lamp', 'daytime-running-lamp', 'reversing-lamp', 'reflector-replacement',
+  'mirror-glass', 'fuel-cap', 'number-plate-replacement', 'windscreen-chip', 'windscreen-replacement',
+  'catalytic-converter', 'dpf-replacement',
+]);
+
 export const CATEGORIES = [
   {
     id: 'full-service',
