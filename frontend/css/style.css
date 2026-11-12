@@ -271,3 +271,17 @@ main {
 .how-we-price { font-size: 0.85rem; color: var(--muted); margin: 1rem 0; }
 .how-we-price summary { cursor: pointer; font-weight: 600; color: var(--brand); }
 .how-we-price p { margin-top: 0.5rem; }
+
+.verdict-gap { font-size: 0.875rem; margin-top: -0.4rem; margin-bottom: 0.75rem; }
+
+/* Planned features: informational only */
+.coming-soon {
+  border: 1px dashed var(--border);
+  border-radius: 8px;
+  padding: 1rem 1.25rem;
+  margin: 1rem 0;
+  font-size: 0.9rem;
+  color: var(--muted);
+}
+.coming-soon-heading { font-weight: 700; color: var(--text); margin-bottom: 0.25rem; }
+.coming-soon ul { padding-left: 1.2rem; margin-top: 0.25rem; }

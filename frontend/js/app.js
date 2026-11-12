@@ -147,7 +147,7 @@ function renderVehicleStatus(details) {
 }
 
 function renderBenchmark(data, category, quoted) {
-  const { safety_critical, label, confidence } = category;
+  const { safety_critical, label, confidence, keywords } = category;
   const region = REGIONS[regionSelect.value] ?? REGIONS.other;
   const regional = region.factor !== 1 && !NOT_REGIONAL.has(category.id);
   // Round adjusted ranges to the nearest £5 so they don't imply false precision
@@ -157,7 +157,11 @@ function renderBenchmark(data, category, quoted) {
   // Three-way verdict: a quote below the range is flagged too, not passed as typical
   const verdict = quoted < min ? 'low' : quoted > max ? 'high' : 'ok';
   const verdictText = { low: 'Below typical range', ok: 'Within typical range', high: 'Above typical range' }[verdict];
-
+  // How far outside the range, measured from the nearest edge (we hold ranges, not averages)
+  const gap = verdict === 'high' ? quoted - max : verdict === 'low' ? min - quoted : 0;
+  const gapPct = Math.round(gap / (verdict === 'high' ? max : min) * 100);
+  const gapText = verdict === 'ok' ? '' :
+    `£${gap.toFixed(2)} (${gapPct}%) ${verdict === 'high' ? 'above the top' : 'below the bottom'} of the typical range`;
 
   resultSection.innerHTML = `
     <div class="benchmark-card">
@@ -167,6 +171,7 @@ function renderBenchmark(data, category, quoted) {
       <p class="vat-note">Compare this with your total price. If your quote is shown before VAT, add 20%.</p>
       <p class="your-quote">Your quote: <strong>£${quoted.toFixed(2)}</strong></p>
       <div class="verdict verdict-${verdict}">${verdictText}</div>
+      ${gapText ? `<p class="verdict-gap">${gapText}</p>` : ''}
       ${verdict === 'low' ? '<p class="confidence-warning">A price this low can mean cheaper parts, part of the job left out, or a price that goes up once work starts. Check exactly what the quote includes.</p>' : ''}
       ${safety_critical ? '<p class="safety-badge">Safety-critical repair</p>' : ''}
       ${renderTransmissionNote(category.id, transmissionSelect.value)}
@@ -180,7 +185,9 @@ function renderBenchmark(data, category, quoted) {
         mechanical or legal advice. Always discuss pricing directly with your garage.
       </p>
     </div>
+    ${renderMotMatches(data.mot_history?.motTests, keywords)}
     ${renderDefects(data.mot_history?.motTests?.[0]?.defects)}
+    ${renderComingSoon()}
   `;
   resultSection.hidden = false;
 }
@@ -196,6 +203,49 @@ function renderTransmissionNote(categoryId, transmission) {
   return note ? `<p class="confidence-warning">${note}</p>` : '';
 }
 
+// MOT items across all tests that mention this repair, newest first
+function renderMotMatches(tests, keywords) {
+  if (!tests?.length || !keywords?.length) return '';
+  const matches = tests.flatMap(t => (t.defects ?? [])
+    .filter(d => keywords.some(kw => d.text?.toLowerCase().includes(kw)))
+    .map(d => ({ ...d, date: t.completedDate?.slice(0, 10) })));
+  if (!matches.length) return '';
+  const shown = matches.slice(0, 5);
+  return `
+    <div class="defects-section">
+      <p class="section-label">This repair in your MOT history (${matches.length} match${matches.length > 1 ? 'es' : ''})</p>
+      <ul>
+        ${shown.map(d => `
+          <li class="defect-${esc(d.type?.toLowerCase())}">
+            <span class="defect-type">${esc(d.type)}</span> ${esc(d.date ?? '')}: ${esc(d.text)}
+          </li>
+        `).join('')}
+      </ul>
+      <p class="field-hint">Matched on keywords, so check each item relates to this job.</p>
+    </div>
+  `;
+}
+
+// Planned features only: no price, no button, nothing that implies it can be bought today
+function renderComingSoon() {
+  return `
+    <div class="coming-soon">
+      <p class="coming-soon-heading">Coming soon</p>
+      <p>We're working on:</p>
+      <ul>
+        <li>A shareable report you can send to your garage</li>
+        <li>Prices for your make and model</li>
+        <li>A parts and labour breakdown, where the data supports it</li>
+      </ul>
+    </div>
+  `;
+}
+
+// DVSA text is external data, so escape it before it goes into the page
+function esc(v) {
+  return String(v ?? '').replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+}
+
 function renderDefects(items) {
   if (!items?.length) return '';
   return `
@@ -203,8 +253,8 @@ function renderDefects(items) {
       <p class="section-label">Latest MOT — defects &amp; advisories</p>
       <ul>
         ${items.map(item => `
-          <li class="defect-${item.type?.toLowerCase()}">
-            <span class="defect-type">${item.type}</span> ${item.text}
+          <li class="defect-${esc(item.type?.toLowerCase())}">
+            <span class="defect-type">${esc(item.type)}</span> ${esc(item.text)}
             ${item.dangerous ? '<span class="badge-danger">DANGEROUS</span>' : ''}
           </li>
         `).join('')}
