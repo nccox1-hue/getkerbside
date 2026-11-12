@@ -1,6 +1,6 @@
 import logging
 from pathlib import Path
-from fastapi import FastAPI
+from fastapi import FastAPI, Request
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.staticfiles import StaticFiles
 from slowapi import _rate_limit_exceeded_handler
@@ -15,7 +15,25 @@ from app import config
 # troubleshooting and analysis using hashed references instead.
 logging.getLogger("uvicorn.access").disabled = True
 
-app = FastAPI(title="Kerbside API", version="0.1.0")
+# API docs are switched off in production; they're not needed by the app and advertise every endpoint
+app = FastAPI(title="Kerbside API", version="0.1.0", docs_url=None, redoc_url=None, openapi_url=None)
+
+SECURITY_HEADERS = {
+    # Stops the site being framed by another page (clickjacking)
+    "X-Frame-Options": "DENY",
+    "Content-Security-Policy": "frame-ancestors 'none'; object-src 'none'; base-uri 'self'",
+    "X-Content-Type-Options": "nosniff",
+    "Referrer-Policy": "strict-origin-when-cross-origin",
+    "Strict-Transport-Security": "max-age=31536000",
+    "Permissions-Policy": "camera=(), microphone=(), geolocation=(), payment=()",
+}
+
+
+@app.middleware("http")
+async def security_headers(request: Request, call_next):
+    response = await call_next(request)
+    response.headers.update(SECURITY_HEADERS)
+    return response
 
 app.state.limiter = limiter
 app.add_exception_handler(RateLimitExceeded, _rate_limit_exceeded_handler)

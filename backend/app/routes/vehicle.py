@@ -4,7 +4,7 @@ import time
 import httpx
 from datetime import datetime, timezone
 from fastapi import APIRouter, HTTPException, Request
-from app.limiter import limiter
+from app.limiter import limiter, client_ip
 from app.services import dvsa_client, dvla_client
 from app import config
 
@@ -22,7 +22,7 @@ def _vrn_ref(vrn: str) -> str:
 
 
 def _ip_ref(request: Request) -> str:
-    ip = request.client.host if request.client else "unknown"
+    ip = client_ip(request) or "unknown"
     return hashlib.sha256(ip.encode("utf-8")).hexdigest()[:8]
 
 
