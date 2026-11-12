@@ -147,7 +147,7 @@ function renderVehicleStatus(details) {
 }
 
 function renderBenchmark(data, category, quoted) {
-  const { safety_critical, keywords, label, confidence } = category;
+  const { safety_critical, label, confidence } = category;
   const region = REGIONS[regionSelect.value] ?? REGIONS.other;
   const regional = region.factor !== 1 && !NOT_REGIONAL.has(category.id);
   // Round adjusted ranges to the nearest £5 so they don't imply false precision
@@ -158,9 +158,6 @@ function renderBenchmark(data, category, quoted) {
   const verdict = quoted < min ? 'low' : quoted > max ? 'high' : 'ok';
   const verdictText = { low: 'Below typical range', ok: 'Within typical range', high: 'Above typical range' }[verdict];
 
-  const relevantAdvisories = (data.mot_history?.motTests ?? [])
-    .flatMap(t => t.defects ?? [])
-    .filter(d => keywords.some(kw => d.text?.toLowerCase().includes(kw)));
 
   resultSection.innerHTML = `
     <div class="benchmark-card">
@@ -183,7 +180,6 @@ function renderBenchmark(data, category, quoted) {
         mechanical or legal advice. Always discuss pricing directly with your garage.
       </p>
     </div>
-    ${renderUpgradePrompt(label, relevantAdvisories.length)}
     ${renderDefects(data.mot_history?.motTests?.[0]?.defects)}
   `;
   resultSection.hidden = false;
@@ -198,23 +194,6 @@ function renderTransmissionNote(categoryId, transmission) {
   };
   const note = notes[`${categoryId}:${transmission}`];
   return note ? `<p class="confidence-warning">${note}</p>` : '';
-}
-
-function renderUpgradePrompt(categoryLabel, advisoryCount) {
-  return `
-    <div class="upgrade-prompt">
-      <p class="upgrade-heading">Get the full picture with Pro</p>
-      <ul>
-        <li>Exact percentage above or below average</li>
-        <li>Parts vs labour cost breakdown</li>
-        ${advisoryCount > 0
-          ? `<li>${advisoryCount} MOT advisory match${advisoryCount > 1 ? 'es' : ''} found — see if this repair was previously flagged on this vehicle</li>`
-          : ''}
-        <li>Shareable report you can send to the garage</li>
-      </ul>
-      <button class="btn-pro" disabled>Upgrade to Pro — £3.99/month</button>
-    </div>
-  `;
 }
 
 function renderDefects(items) {

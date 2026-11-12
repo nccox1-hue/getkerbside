@@ -249,30 +249,6 @@ main {
   border-radius: 4px;
 }
 
-/* Upgrade prompt */
-.upgrade-prompt {
-  background: #f0f4ff;
-  border: 1px solid #c5d0f5;
-  border-radius: 8px;
-  padding: 1rem 1.25rem;
-  margin-bottom: 1rem;
-}
-.upgrade-heading { font-weight: 700; margin-bottom: 0.5rem; }
-.upgrade-prompt ul { padding-left: 1.2rem; margin-bottom: 0.75rem; font-size: 0.9rem; }
-.upgrade-prompt li { margin-bottom: 0.25rem; }
-.btn-pro {
-  width: 100%;
-  padding: 0.7rem;
-  background: var(--brand);
-  color: #fff;
-  font-size: 0.95rem;
-  font-weight: 600;
-  border: none;
-  border-radius: 6px;
-  cursor: not-allowed;
-  opacity: 0.7;
-}
-
 /* Defects section */
 .defects-section { margin-top: 1rem; }
 .section-label {
