@@ -207,7 +207,7 @@ function renderTransmissionNote(categoryId, transmission) {
 function renderMotMatches(tests, keywords) {
   if (!tests?.length || !keywords?.length) return '';
   const matches = tests.flatMap(t => (t.defects ?? [])
-    .filter(d => keywords.some(kw => d.text?.toLowerCase().includes(kw)))
+    .filter(d => matchesKeywords(d.text, keywords))
     .map(d => ({ ...d, date: t.completedDate?.slice(0, 10) })));
   if (!matches.length) return '';
   const shown = matches.slice(0, 5);
@@ -224,6 +224,12 @@ function renderMotMatches(tests, keywords) {
       <p class="field-hint">Matched on keywords, so check each item relates to this job.</p>
     </div>
   `;
+}
+
+// Every keyword must appear; 'a|b' accepts either alternative (e.g. front pads must say brake, pad and front)
+function matchesKeywords(text, keywords) {
+  const t = text?.toLowerCase() ?? '';
+  return keywords.every(kw => kw.split('|').some(alt => t.includes(alt)));
 }
 
 // Planned features only: no price, no button, nothing that implies it can be bought today

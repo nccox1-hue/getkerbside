@@ -1,4 +1,5 @@
 // Repair benchmarks: total price (parts + labour + VAT) at a typical UK independent garage.
+// keywords: every entry must appear in the MOT item text; 'a|b' means either. Used to match MOT history to the job.
 // confidence: 'high' | 'medium' | 'low'. 'low' shows a limited-data warning on the result.
 // researched: true = evidenced under docs/benchmark-research-process.md (automotive-app repo).
 // Categories without it predate the process; their 'medium' rating is provisional until researched.
@@ -98,7 +99,7 @@ export const CATEGORIES = [
     safety_critical: true,
     mot_testable: false,
     confidence: 'medium',
-    keywords: ['timing', 'belt', 'cambelt'],
+    keywords: ['timing belt|cambelt'],
   },
   {
     id: 'clutch',
@@ -138,7 +139,7 @@ export const CATEGORIES = [
     safety_critical: false,
     mot_testable: false,
     confidence: 'medium',
-    keywords: ['gearbox', 'transmission'],
+    keywords: ['gearbox|transmission'],
   },
   {
     id: 'gearbox-auto',
@@ -148,7 +149,7 @@ export const CATEGORIES = [
     safety_critical: false,
     mot_testable: false,
     confidence: 'medium',
-    keywords: ['gearbox', 'transmission', 'automatic'],
+    keywords: ['gearbox|transmission', 'automatic'],
   },
   {
     id: 'tyre',
@@ -157,7 +158,7 @@ export const CATEGORIES = [
     safety_critical: true,
     mot_testable: true,
     confidence: 'medium',
-    keywords: ['tyre', 'worn', 'tread', 'illegal'],
+    keywords: ['tyre|tread'],
   },
   {
     id: 'battery',
@@ -194,7 +195,7 @@ export const CATEGORIES = [
     safety_critical: true,
     mot_testable: true,
     confidence: 'medium',
-    keywords: ['brake', 'pipe', 'corroded'],
+    keywords: ['brake', 'pipe'],
   },
   {
     id: 'brake-hose-replacement',
@@ -357,7 +358,7 @@ export const CATEGORIES = [
     safety_critical: true,
     mot_testable: true,
     confidence: 'medium',
-    keywords: ['eps', 'mil'],
+    keywords: ['power steering|eps', 'mil|warning'],
   },
   {
     id: 'wheel-alignment',
@@ -657,7 +658,7 @@ export const CATEGORIES = [
     safety_critical: true,
     mot_testable: true,
     confidence: 'medium',
-    keywords: ['wiper'],
+    keywords: ['wiper', 'blade'],
   },
   {
     id: 'wiper-motor',
@@ -975,7 +976,7 @@ export const CATEGORIES = [
     safety_critical: false,
     mot_testable: true,
     confidence: 'medium',
-    keywords: ['mil', 'eml'],
+    keywords: ['engine', 'mil'],
   },
   {
     id: 'lambda-sensor',
