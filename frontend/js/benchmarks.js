@@ -24,6 +24,7 @@ export const NOT_REGIONAL = new Set([
   'number-plate-lamp', 'daytime-running-lamp', 'reversing-lamp', 'reflector-replacement',
   'mirror-glass', 'fuel-cap', 'number-plate-replacement', 'windscreen-chip', 'windscreen-replacement',
   'catalytic-converter', 'dpf-replacement',
+  'engine-management-light', 'air-con-regas-r134a', 'air-con-regas-r1234yf',
 ]);
 
 export const CATEGORIES = [
@@ -990,12 +991,35 @@ export const CATEGORIES = [
   },
   {
     id: 'engine-management-light',
+    researched: true,
     label: 'Engine management light diagnosis',
-    min: 60, max: 140,
+    min: 55, max: 70,
     safety_critical: false,
     mot_testable: true,
     confidence: 'medium',
     keywords: ['engine', 'mil'],
+  },
+  {
+    id: 'air-con-regas-r134a',
+    researched: true,
+    label: 'Air con regas – older cars (R134a gas)',
+    note: "Not sure which gas? Cars first registered from 2017 almost all use R1234yf; check the sticker under the bonnet. A regas doesn't fix a leak: if the system is empty, expect a leak test (about £20) on top.",
+    min: 50, max: 85,
+    safety_critical: false,
+    mot_testable: false,
+    confidence: 'medium',
+    keywords: [],
+  },
+  {
+    id: 'air-con-regas-r1234yf',
+    researched: true,
+    label: 'Air con regas – newer cars, usually 2017 on (R1234yf gas)',
+    note: "Not sure which gas? Cars first registered from 2017 almost all use R1234yf; check the sticker under the bonnet. A regas doesn't fix a leak: if the system is empty, expect a leak test (about £20) on top.",
+    min: 110, max: 155,
+    safety_critical: false,
+    mot_testable: false,
+    confidence: 'medium',
+    keywords: [],
   },
   {
     id: 'lambda-sensor',

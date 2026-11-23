@@ -175,6 +175,7 @@ function renderBenchmark(data, category, quoted) {
       ${verdict === 'low' ? '<p class="confidence-warning">A price this low can mean cheaper parts, part of the job left out, or a price that goes up once work starts. Check exactly what the quote includes.</p>' : ''}
       ${safety_critical ? '<p class="safety-badge">Safety-critical repair</p>' : ''}
       ${renderTransmissionNote(category.id, transmissionSelect.value)}
+      ${category.note ? `<p class="confidence-warning">${category.note}</p>` : ''}
       ${confidence === 'low' ? '<p class="confidence-warning">Limited price data for this repair. Treat this range as a rough guide only.</p>' : ''}
       <p class="disclaimer">
         These results compare your quoted price against typical UK independent garage
