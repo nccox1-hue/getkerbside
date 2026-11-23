@@ -6,7 +6,7 @@
 
 // Launch switch (CEO 2026-10-30): set to false before go-live so only researched categories are listed.
 // Kept true until the launch shortlist is researched, otherwise the live list drops to a handful of jobs.
-export const SHOW_UNRESEARCHED = true;
+export const SHOW_UNRESEARCHED = false;
 
 // Regional bands (CEO 2026-11-04, docs/research/regional-bands-2026-11.md in automotive-app repo).
 // London and South East labour runs about 45% and 20% above the UK average; factor = premium x ~50% labour share.

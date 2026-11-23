@@ -1,4 +1,4 @@
-const CACHE = 'kerbside-v22';
+const CACHE = 'kerbside-v23';
 const STATIC = [
   '/',
   '/css/style.css',
@@ -11,7 +11,10 @@ const STATIC = [
 self.addEventListener('install', event => {
   // Pre-cache static shell; skip waiting so new SW activates immediately
   event.waitUntil(
-    caches.open(CACHE).then(c => c.addAll(STATIC)).then(() => self.skipWaiting())
+    // cache: 'reload' bypasses the browser's HTTP cache, so a new version never pre-caches stale files
+    caches.open(CACHE)
+      .then(c => c.addAll(STATIC.map(url => new Request(url, { cache: 'reload' }))))
+      .then(() => self.skipWaiting())
   );
 });
 
