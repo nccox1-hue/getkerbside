@@ -195,8 +195,11 @@ export const CATEGORIES = [
   },
   {
     id: 'mot-test',
+    researched: true,
     label: 'MOT test only',
-    min: 35, max: 55,
+    // Max is the legal maximum fee for a car (class 4)
+    min: 40, max: 54.85,
+    low_note: 'Cheap MOTs are common. Some garages discount the test to win repair work. The test itself is the same at every test centre.',
     safety_critical: false,
     mot_testable: true,
     confidence: 'medium',
@@ -388,12 +391,25 @@ export const CATEGORIES = [
   },
   {
     id: 'wheel-alignment',
-    label: 'Wheel alignment / tracking',
-    min: 40, max: 90,
+    researched: true,
+    label: 'Wheel alignment / tracking (front wheels)',
+    min: 30, max: 75,
+    note: 'This is for the front wheels only. Four-wheel alignment usually costs more.',
     safety_critical: true,
     mot_testable: false,
     confidence: 'medium',
     keywords: ['tracking', 'alignment'],
+  },
+  {
+    id: 'alternator',
+    researched: true,
+    label: 'Alternator replacement',
+    min: 265, max: 640,
+    note: 'A reconditioned alternator is usually towards the bottom of the range, a new one towards the top.',
+    safety_critical: false,
+    mot_testable: false,
+    confidence: 'medium',
+    keywords: ['alternator'],
   },
 
   {

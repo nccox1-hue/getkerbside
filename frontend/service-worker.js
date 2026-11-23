@@ -1,4 +1,4 @@
-const CACHE = 'kerbside-v18';
+const CACHE = 'kerbside-v19';
 const STATIC = [
   '/',
   '/css/style.css',

@@ -193,7 +193,7 @@ function renderBenchmark(data, category, quoted) {
       <p class="your-quote">Your quote: <strong>£${quoted.toFixed(2)}</strong></p>
       <div class="verdict verdict-${verdict}">${verdictText}</div>
       ${gapText ? `<p class="verdict-gap">${gapText}</p>` : ''}
-      ${verdict === 'low' ? '<p class="confidence-warning">A price this low can mean cheaper parts, part of the job left out, or a price that goes up once work starts. Check exactly what the quote includes.</p>' : ''}
+      ${verdict === 'low' ? `<p class="confidence-warning">${category.low_note ?? 'A price this low can mean cheaper parts, part of the job left out, or a price that goes up once work starts. Check exactly what the quote includes.'}</p>` : ''}
       ${safety_critical ? '<p class="safety-badge">Safety-critical repair</p>' : ''}
       ${renderTransmissionNote(category.id, transmissionSelect.value)}
       ${category.note ? `<p class="confidence-warning">${category.note}</p>` : ''}
