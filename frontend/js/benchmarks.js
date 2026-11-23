@@ -177,7 +177,17 @@ export const CATEGORIES = [
   {
     id: 'battery',
     label: '12V battery replacement',
-    min: 120, max: 280,
+    // Provisional: only 2 independent owners per type (Kwik Fit, Bumper), so not researched (R13)
+    min: 90, max: 335,
+    variants: {
+      question: 'Does the car have stop-start?',
+      hint: 'Stop-start is when the engine switches itself off when you stop, for example at traffic lights. These cars need a dearer EFB or AGM battery.',
+      unsure_note: 'This range covers standard and stop-start batteries. If the engine switches itself off at traffic lights, the car has stop-start and the price will be towards the top.',
+      options: [
+        { value: 'standard', label: 'No – standard battery', short: 'standard battery', min: 90, max: 145 },
+        { value: 'stop-start', label: 'Yes – stop-start (EFB or AGM battery)', short: 'stop-start (EFB or AGM)', min: 170, max: 335 },
+      ],
+    },
     safety_critical: false,
     mot_testable: false,
     confidence: 'medium',

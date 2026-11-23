@@ -12,6 +12,10 @@ const categorySelect = document.getElementById('category-select');
 const priceInput    = document.getElementById('price-input');
 const transmissionGroup  = document.getElementById('transmission-group');
 const transmissionSelect = document.getElementById('transmission-select');
+const variantGroup  = document.getElementById('variant-group');
+const variantSelect = document.getElementById('variant-select');
+const variantLabel  = document.getElementById('variant-label');
+const variantHint   = document.getElementById('variant-hint');
 const vehicleCard   = document.getElementById('vehicle-card');
 const resultSection = document.getElementById('result');
 const errorSection  = document.getElementById('error');
@@ -45,6 +49,21 @@ categorySelect.addEventListener('change', () => {
   const category = CATEGORIES.find(c => c.id === categorySelect.value);
   transmissionGroup.hidden = !category?.asks_transmission;
   if (transmissionGroup.hidden) transmissionSelect.value = '';
+
+  // Jobs priced differently by type (e.g. battery: standard or stop-start) ask one extra question
+  const variants = category?.variants;
+  variantGroup.hidden = !variants;
+  variantSelect.innerHTML = '';
+  if (variants) {
+    variantLabel.textContent = variants.question;
+    variantHint.textContent = variants.hint ?? '';
+    [{ value: '', label: 'Not sure' }, ...variants.options].forEach(o => {
+      const opt = document.createElement('option');
+      opt.value = o.value;
+      opt.textContent = o.label;
+      variantSelect.appendChild(opt);
+    });
+  }
 });
 
 // Phase 1 — VRM lookup
@@ -147,13 +166,15 @@ function renderVehicleStatus(details) {
 }
 
 function renderBenchmark(data, category, quoted) {
-  const { safety_critical, label, confidence, keywords } = category;
+  const { safety_critical, confidence, keywords } = category;
+  const range = pickRange(category, variantSelect.value);
+  const label = range.label ? `${category.label} – ${range.label}` : category.label;
   const region = REGIONS[regionSelect.value] ?? REGIONS.other;
   const regional = region.factor !== 1 && !NOT_REGIONAL.has(category.id);
   // Round adjusted ranges to the nearest £5 so they don't imply false precision
   const adjust = v => regional ? Math.round(v * region.factor / 5) * 5 : v;
-  const min = adjust(category.min);
-  const max = adjust(category.max);
+  const min = adjust(range.min);
+  const max = adjust(range.max);
   // Three-way verdict: a quote below the range is flagged too, not passed as typical
   const verdict = quoted < min ? 'low' : quoted > max ? 'high' : 'ok';
   const verdictText = { low: 'Below typical range', ok: 'Within typical range', high: 'Above typical range' }[verdict];
@@ -176,6 +197,7 @@ function renderBenchmark(data, category, quoted) {
       ${safety_critical ? '<p class="safety-badge">Safety-critical repair</p>' : ''}
       ${renderTransmissionNote(category.id, transmissionSelect.value)}
       ${category.note ? `<p class="confidence-warning">${category.note}</p>` : ''}
+      ${range.note ? `<p class="confidence-warning">${range.note}</p>` : ''}
       ${confidence === 'low' ? '<p class="confidence-warning">Limited price data for this repair. Treat this range as a rough guide only.</p>' : ''}
       <p class="disclaimer">
         These results compare your quoted price against typical UK independent garage
@@ -191,6 +213,19 @@ function renderBenchmark(data, category, quoted) {
     ${renderComingSoon()}
   `;
   resultSection.hidden = false;
+}
+
+// The range for the chosen type; "Not sure" spans every type so no fair quote is flagged
+function pickRange(category, value) {
+  const variants = category.variants;
+  if (!variants) return category;
+  const chosen = variants.options.find(o => o.value === value);
+  if (chosen) return { min: chosen.min, max: chosen.max, label: chosen.short };
+  return {
+    min: Math.min(...variants.options.map(o => o.min)),
+    max: Math.max(...variants.options.map(o => o.max)),
+    note: variants.unsure_note,
+  };
 }
 
 function renderTransmissionNote(categoryId, transmission) {
