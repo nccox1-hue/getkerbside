@@ -386,8 +386,9 @@ export const CATEGORIES = [
 
   {
     id: 'front-coil-spring',
-    label: 'Front coil spring replacement',
-    min: 180, max: 320,
+    researched: true,
+    label: 'Front coil springs (pair)',
+    min: 185, max: 315,
     safety_critical: true,
     mot_testable: true,
     confidence: 'medium',
@@ -395,8 +396,9 @@ export const CATEGORIES = [
   },
   {
     id: 'rear-coil-spring',
-    label: 'Rear coil spring replacement',
-    min: 125, max: 285,
+    researched: true,
+    label: 'Rear coil springs (pair)',
+    min: 150, max: 235,
     safety_critical: true,
     mot_testable: true,
     confidence: 'medium',
