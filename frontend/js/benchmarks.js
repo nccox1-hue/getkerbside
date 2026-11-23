@@ -70,8 +70,9 @@ export const CATEGORIES = [
   },
   {
     id: 'front-pads-discs',
+    researched: true,
     label: 'Front brake pads + discs',
-    min: 180, max: 350,
+    min: 185, max: 400,
     safety_critical: true,
     mot_testable: true,
     confidence: 'medium',
@@ -431,6 +432,17 @@ export const CATEGORIES = [
     mot_testable: false,
     confidence: 'medium',
     keywords: ['water pump'],
+  },
+  {
+    id: 'thermostat',
+    researched: true,
+    label: 'Thermostat replacement',
+    min: 85, max: 195,
+    note: 'If the thermostat is built into a housing that has to be replaced as a unit, or the car is a premium model, expect more.',
+    safety_critical: false,
+    mot_testable: false,
+    confidence: 'medium',
+    keywords: ['thermostat'],
   },
 
   {
