@@ -188,7 +188,7 @@ function renderBenchmark(data, category, quoted) {
     <div class="benchmark-card">
       <p class="benchmark-label">${label}</p>
       <p class="benchmark-range">Typical price: <strong>£${min}–£${max}</strong></p>
-      <p class="benchmark-basis">Includes parts, labour and VAT${regional ? `. Adjusted for ${region.label} garage labour rates` : ''}</p>
+      <p class="benchmark-basis">Includes parts, labour and VAT${regional ? `. Adjusted for ${region.label} garage labour rates` : region.factor !== 1 ? `. Same price in ${region.label} as the rest of the UK, because this job is mostly parts or a fixed fee` : ''}</p>
       <p class="vat-note">Compare this with your total price. If your quote is shown before VAT, add 20%.</p>
       <p class="your-quote">Your quote: <strong>£${quoted.toFixed(2)}</strong></p>
       <div class="verdict verdict-${verdict}">${verdictText}</div>
