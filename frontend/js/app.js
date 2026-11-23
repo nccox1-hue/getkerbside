@@ -218,7 +218,8 @@ function renderBenchmark(data, category, quoted) {
 // The range for the chosen type; "Not sure" spans every type so no fair quote is flagged
 function pickRange(category, value) {
   const variants = category.variants;
-  if (!variants) return category;
+  // Range only: the category's own label and note are rendered separately
+  if (!variants) return { min: category.min, max: category.max };
   const chosen = variants.options.find(o => o.value === value);
   if (chosen) return { min: chosen.min, max: chosen.max, label: chosen.short };
   return {
