@@ -304,8 +304,9 @@ export const CATEGORIES = [
 
   {
     id: 'track-rod-end',
-    label: 'Track rod end replacement',
-    min: 70, max: 150,
+    researched: true,
+    label: 'Track rod end replacement (per side)',
+    min: 65, max: 135,
     safety_critical: true,
     mot_testable: true,
     confidence: 'medium',
@@ -442,8 +443,9 @@ export const CATEGORIES = [
   },
   {
     id: 'lower-ball-joint',
-    label: 'Lower suspension ball joint',
-    min: 80, max: 180,
+    researched: true,
+    label: 'Lower suspension ball joint (per joint)',
+    min: 115, max: 230,
     safety_critical: true,
     mot_testable: true,
     confidence: 'medium',
@@ -487,8 +489,9 @@ export const CATEGORIES = [
   },
   {
     id: 'wheel-bearing',
-    label: 'Wheel bearing replacement',
-    min: 150, max: 350,
+    researched: true,
+    label: 'Wheel bearing replacement (one)',
+    min: 165, max: 325,
     safety_critical: true,
     mot_testable: true,
     confidence: 'medium',
