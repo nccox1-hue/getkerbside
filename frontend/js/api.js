@@ -1,4 +1,6 @@
-const API_BASE = ['getkerbside.co.uk', 'www.getkerbside.co.uk'].includes(window.location.hostname)
+// Cloudflare Pages serves the frontend (getkerbside.co.uk, or the pages.dev preview) and the API lives
+// on Render. Render and localhost serve both from one origin, so they use relative URLs.
+const API_BASE = ['getkerbside.co.uk', 'www.getkerbside.co.uk', 'getkerbside.pages.dev'].includes(window.location.hostname)
   ? 'https://api.getkerbside.co.uk'
   : '';
 

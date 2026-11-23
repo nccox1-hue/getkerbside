@@ -19,5 +19,6 @@ DVLA_BASE_URL: str = os.environ.get(
 
 # CORS origins — comma-separated
 CORS_ORIGINS: list[str] = os.environ.get(
-    "CORS_ORIGINS", "https://getkerbside.co.uk,https://www.getkerbside.co.uk,http://localhost:3000"
+    "CORS_ORIGINS",
+    "https://getkerbside.co.uk,https://www.getkerbside.co.uk,https://getkerbside.pages.dev,http://localhost:3000",
 ).split(",")
