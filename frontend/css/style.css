@@ -222,11 +222,7 @@ main {
   margin-bottom: 1rem;
 }
 .benchmark-label { font-size: 0.8rem; text-transform: uppercase; letter-spacing: 0.4px; color: var(--muted); margin-bottom: 0.5rem; }
-.benchmark-range { font-size: 1rem; margin-bottom: 0.25rem; }
 .confidence-warning { font-size: 0.8rem; color: var(--advisory); background: #fff3e0; padding: 0.4rem 0.6rem; border-radius: 4px; margin-bottom: 0.75rem; }
-.benchmark-basis { font-size: 0.875rem; font-weight: 600; color: var(--brand); margin-bottom: 0.25rem; }
-.vat-note        { font-size: 0.8rem; color: var(--muted); margin-bottom: 0.5rem; }
-.your-quote      { font-size: 1rem; margin-bottom: 0.75rem; }
 
 .verdict {
   display: inline-block;
@@ -276,6 +272,23 @@ main {
 .how-we-price p { margin-top: 0.5rem; }
 
 .verdict-gap { font-size: 0.875rem; margin-top: -0.4rem; margin-bottom: 0.75rem; }
+
+/* Range bar: typical range as a red-amber-green band, with a marker for the quote */
+.range-bar { position: relative; margin: 0.5rem 0 1rem; }
+.range-quote { position: relative; height: 2.6rem; }
+.range-quote-pin { position: absolute; top: 0; bottom: 0; width: 0; }
+.range-quote-label {
+  position: absolute; left: 0; top: 0;
+  white-space: nowrap; font-size: 0.95rem; font-weight: 700; color: var(--text);
+}
+.range-quote-arrow {
+  position: absolute; left: 0; bottom: -0.1rem; transform: translateX(-50%);
+  font-size: 1rem; line-height: 1; color: var(--brand);
+}
+.range-track { height: 14px; border-radius: 7px; }
+.range-ends { position: relative; height: 1.4rem; font-size: 0.85rem; font-weight: 600; }
+.range-ends span { position: absolute; top: 0.25rem; transform: translateX(-50%); white-space: nowrap; }
+.range-caption { font-size: 0.75rem; color: var(--muted); text-align: center; margin-top: 0.25rem; }
 
 /* Planned features: informational only */
 .coming-soon {

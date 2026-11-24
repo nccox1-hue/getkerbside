@@ -182,16 +182,15 @@ function renderBenchmark(data, category, quoted) {
   const gap = verdict === 'high' ? quoted - max : verdict === 'low' ? min - quoted : 0;
   const gapPct = Math.round(gap / (verdict === 'high' ? max : min) * 100);
   const gapText = verdict === 'ok' ? '' :
-    `£${gap.toFixed(2)} (${gapPct}%) ${verdict === 'high' ? 'above the top' : 'below the bottom'} of the typical range`;
+    `£${Math.round(gap).toLocaleString('en-GB')} (${gapPct}%) ${verdict === 'high' ? 'above' : 'below'} the range`;
+  const basis = regional ? `Adjusted for ${region.label} garage labour rates.`
+    : region.factor !== 1 ? `Same price in ${region.label} as the rest of the UK, because this job is mostly parts or a fixed fee.` : '';
 
   resultSection.innerHTML = `
     <div class="benchmark-card">
       <p class="benchmark-label">${label}</p>
-      <p class="benchmark-range">Typical price: <strong>£${min}–£${max}</strong></p>
-      <p class="benchmark-basis">Includes parts, labour and VAT${regional ? `. Adjusted for ${region.label} garage labour rates` : region.factor !== 1 ? `. Same price in ${region.label} as the rest of the UK, because this job is mostly parts or a fixed fee` : ''}</p>
-      <p class="vat-note">Compare this with your total price. If your quote is shown before VAT, add 20%.</p>
-      <p class="your-quote">Your quote: <strong>£${quoted.toFixed(2)}</strong></p>
-      <div class="verdict verdict-${verdict}">${verdictText}</div>
+      ${renderRangeBar(min, max, quoted, verdict)}
+      <div class="verdict" style="${verdictStyle(min, max, quoted, verdict)}">${verdictText}</div>
       ${gapText ? `<p class="verdict-gap">${gapText}</p>` : ''}
       ${verdict === 'low' ? `<p class="confidence-warning">${category.low_note ?? 'A price this low can mean cheaper parts, part of the job left out, or a price that goes up once work starts. Check exactly what the quote includes.'}</p>` : ''}
       ${safety_critical ? '<p class="safety-badge">Safety-critical repair</p>' : ''}
@@ -199,6 +198,11 @@ function renderBenchmark(data, category, quoted) {
       ${category.note ? `<p class="confidence-warning">${category.note}</p>` : ''}
       ${range.note ? `<p class="confidence-warning">${range.note}</p>` : ''}
       ${confidence === 'low' ? '<p class="confidence-warning">Limited price data for this repair. Treat this range as a rough guide only.</p>' : ''}
+      <details class="how-we-price">
+        <summary>How this range works</summary>
+        <p>Typical independent garage price, including parts, labour and VAT. ${basis}</p>
+        <p>Compare it with your total price. If your quote is shown before VAT, add 20%.</p>
+      </details>
       <p class="disclaimer">
         These results compare your quoted price against typical UK independent garage
         prices (parts, labour and VAT) from publicly available data. Benchmarks are indicative
@@ -213,6 +217,55 @@ function renderBenchmark(data, category, quoted) {
     ${renderComingSoon()}
   `;
   resultSection.hidden = false;
+}
+
+// Red-amber-green hue for a quote: green at the bottom of the range, red at the top and above.
+// Below the range is blue, not green: a very cheap quote is a warning, not a good result.
+function quoteHue(min, max, quoted) {
+  if (quoted < min) return null;
+  const t = max > min ? Math.min((quoted - min) / (max - min), 1) : 0;
+  return Math.round(120 * (1 - t));
+}
+
+function verdictStyle(min, max, quoted) {
+  const hue = quoteHue(min, max, quoted);
+  return hue === null ? 'background:#e3f2fd;color:#1565c0'
+    : `background:hsl(${hue},70%,92%);color:hsl(${hue},75%,26%)`;
+}
+
+// Bar showing the typical range with a marker where the quote lands. The track extends a
+// quarter of the range either side, and quotes further out sit at the edge with an arrow.
+function renderRangeBar(min, max, quoted, verdict) {
+  const pad = Math.max((max - min) * 0.25, 10);
+  const lo = min - pad;
+  const hi = max + pad;
+  const pos = v => ((v - lo) / (hi - lo)) * 100;
+  const start = pos(min);
+  const end = pos(max);
+  const marker = Math.min(Math.max(pos(quoted), 0), 100);
+  const offScale = quoted < lo ? '◀ ' : quoted > hi ? ' ▶' : '';
+  const quoteText = `£${Math.round(quoted).toLocaleString('en-GB')}`;
+  const where = { low: 'below', ok: 'within', high: 'above' }[verdict];
+  return `
+    <div class="range-bar" role="img"
+         aria-label="Typical price £${min} to £${max}. Your quote of ${quoteText} is ${where} the typical range.">
+      <div class="range-quote">
+        <div class="range-quote-pin" style="left:${marker}%">
+          <span class="range-quote-label" style="transform:translateX(-${marker}%)">${quoted < lo ? offScale : ''}Your quote ${quoteText}${quoted > hi ? offScale : ''}</span>
+          <span class="range-quote-arrow">▼</span>
+        </div>
+      </div>
+      <div class="range-track" style="background:linear-gradient(to right,
+        #90caf9 0%, #90caf9 ${start}%,
+        hsl(120,55%,45%) ${start}%, hsl(60,85%,50%) ${(start + end) / 2}%, hsl(0,70%,50%) ${end}%,
+        hsl(0,70%,38%) ${end}%, hsl(0,70%,38%) 100%)"></div>
+      <div class="range-ends">
+        <span style="left:${start}%">£${min.toLocaleString('en-GB')}</span>
+        <span style="left:${end}%">£${max.toLocaleString('en-GB')}</span>
+      </div>
+      <p class="range-caption">Typical price range</p>
+    </div>
+  `;
 }
 
 // The range for the chosen type; "Not sure" spans every type so no fair quote is flagged
