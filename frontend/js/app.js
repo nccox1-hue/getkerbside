@@ -219,18 +219,29 @@ function renderBenchmark(data, category, quoted) {
   resultSection.hidden = false;
 }
 
-// Red-amber-green hue for a quote: green at the bottom of the range, red at the top and above.
-// Below the range is blue, not green: a very cheap quote is a warning, not a good result.
-function quoteHue(min, max, quoted) {
-  if (quoted < min) return null;
-  const t = max > min ? Math.min((quoted - min) / (max - min), 1) : 0;
-  return Math.round(120 * (1 - t));
+// Red-amber-green bands, symmetric about the middle of the range: green in the middle,
+// amber towards min and max, red outside the range on both sides
+const BANDS = {
+  green: 'hsl(120,55%,42%)',
+  amber: 'hsl(38,95%,52%)',
+  red: 'hsl(0,70%,46%)',
+};
+const PILLS = {
+  green: 'background:#e8f5e9;color:#1b5e20',
+  amber: 'background:#fff3e0;color:#8a4b00',
+  red: 'background:#fdecea;color:#b71c1c',
+};
+
+function quoteBand(min, max, quoted) {
+  if (quoted < min || quoted > max) return 'red';
+  // 0 at the middle of the range, 1 at min or max
+  const fromMiddle = max > min ? Math.abs((quoted - min) / (max - min) - 0.5) * 2 : 0;
+  // Thresholds sit at the midpoints of the gradient's blends, so the pill matches the bar
+  return fromMiddle < 0.55 ? 'green' : 'amber';
 }
 
 function verdictStyle(min, max, quoted) {
-  const hue = quoteHue(min, max, quoted);
-  return hue === null ? 'background:#e3f2fd;color:#1565c0'
-    : `background:hsl(${hue},70%,92%);color:hsl(${hue},75%,26%)`;
+  return PILLS[quoteBand(min, max, quoted)];
 }
 
 // Bar showing the typical range with a marker where the quote lands. The track extends a
@@ -242,6 +253,9 @@ function renderRangeBar(min, max, quoted, verdict) {
   const pos = v => ((v - lo) / (hi - lo)) * 100;
   const start = pos(min);
   const end = pos(max);
+  // Point a fraction of the way from min (0) to max (1), as a % of the track
+  const at = f => start + (end - start) * f;
+  const { green, amber, red } = BANDS;
   const marker = Math.min(Math.max(pos(quoted), 0), 100);
   const offScale = quoted < lo ? '◀ ' : quoted > hi ? ' ▶' : '';
   const quoteText = `£${Math.round(quoted).toLocaleString('en-GB')}`;
@@ -256,9 +270,10 @@ function renderRangeBar(min, max, quoted, verdict) {
         </div>
       </div>
       <div class="range-track" style="background:linear-gradient(to right,
-        #90caf9 0%, #90caf9 ${start}%,
-        hsl(120,55%,45%) ${start}%, hsl(60,85%,50%) ${(start + end) / 2}%, hsl(0,70%,50%) ${end}%,
-        hsl(0,70%,38%) ${end}%, hsl(0,70%,38%) 100%)"></div>
+        ${red} 0%, ${red} ${start}%,
+        ${amber} ${start}%, ${amber} ${at(0.1)}%, ${green} ${at(0.35)}%,
+        ${green} ${at(0.65)}%, ${amber} ${at(0.9)}%, ${amber} ${end}%,
+        ${red} ${end}%, ${red} 100%)"></div>
       <div class="range-ends">
         <span style="left:${start}%">£${min.toLocaleString('en-GB')}</span>
         <span style="left:${end}%">£${max.toLocaleString('en-GB')}</span>
